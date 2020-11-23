@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package pkg.proto.status.v1;
 
-option go_package = "github.com/mydevicesiot/protos/pkg/status/v1;status";
+option go_package = "github.com/myDevicesIoT/protos/pkg/status/v1;status";
 
 
 enum DeviceStatus {

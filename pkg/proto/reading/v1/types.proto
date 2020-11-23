@@ -2,7 +2,7 @@
 syntax = "proto3";
 
 package pkg.proto.reading.v1;
-option go_package = "github.com/mydevicesiot/protos/pkg/proto/reading/v1;proto";
+option go_package = "github.com/myDevicesIoT/protos/pkg/proto/reading/v1;proto";
 
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";

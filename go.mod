@@ -1,4 +1,4 @@
-module github.com/mydevicesiot/protos
+module github.com/myDevicesIoT/protos
 
 go 1.14
 
