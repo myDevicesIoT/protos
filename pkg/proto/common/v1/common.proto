@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package pkg.proto.common.v1;
+
+option go_package = "github.com/mydevicesiot/protos/pkg/proto/common/v1;proto";
+
+import "validate/validate.proto";
+import "google/protobuf/struct.proto";
+
+enum Order {
+    UNKNOWN = 0;
+    ASC = 1;
+    DESC = 2;
+}
+
+message PaginationParam {
+    bool  only_count = 1;
+    int64 current = 2 [(validate.rules).int64.gte = 1];
+    int64 page_size = 3 [(validate.rules).int64.lte = 10000];
+    string cursor = 4;
+}
+
+message PaginationResult {
+    int64 total = 1 [(validate.rules).int64.gte = 1];
+    int64 current = 2 [(validate.rules).int64.gte = 1];
+    int64 page_size = 3 [(validate.rules).int64.lte = 1000,json_name='page_size'];
+    string cursor = 4;
+}
+
+message StatusResult {
+    string status = 1;
+}
+
+message ErrorItem {
+    int32 code = 1;
+    string message = 2;
+}
+
+message ErrorResult {
+    ErrorItem error = 1;
+}
+
+message OrderField {
+    string Key = 1;
+    Order Direction = 2;
+}
+
+message QueryOptions {
+    repeated OrderField OrderFields= 1;
+    repeated string SelectFields = 2;
+}
+
+message Sensor {
+    string channel = 1;
+    string sid = 2;
+    string name = 3;
+    string type = 4;
+    string event=5;
+    int64 ts = 6;
+    double v = 7;
+    string u = 8;
+    string vt = 9;
+    LatLon geo = 10;
+    // @inject_tag: faker:"-"
+    google.protobuf.Struct data = 11;
+}
+
+message LatLon {
+    float lat = 1;
+    float lon = 2;
+}
+
+enum DeviceStatus {
+    UNKNOWN_STATUS = 0;
+    ONLINE = 1;
+    OFFLINE = 2;
+}

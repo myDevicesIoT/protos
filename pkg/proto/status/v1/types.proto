@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package pkg.proto.status.v1;
+
+option go_package = "github.com/mydevicesiot/protos/pkg/status/v1;status";
+
+
+enum DeviceStatus {
+    UNKNOWN_STATUS = 0;
+    ONLINE = 1;
+    OFFLINE = 2;
+}
+

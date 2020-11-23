@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package pkg.proto.reading.v1;
+option go_package = "github.com/mydevicesiot/protos/pkg/proto/reading/v1;proto";
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+import "pkg/proto/reading/v1/types.proto";
+import "pkg/proto/common/v1/common.proto";
+
+service ReadingService {
+  /*
+    get device state
+  */
+  rpc List(ListReadingsRequest) returns (ListReadingsResponse) {
+    option (google.api.http) = {
+      get: "/v1/api/devices/{device_id}/readings"
+      response_body : "readings"
+    };
+  }
+}
+
+
+message ListReadingsRequest {
+  common.v1.PaginationParam pagination=1 [(validate.rules).message.required = true];
+  string device_id = 2 [(validate.rules).string.len = 36];
+  string type = 3;
+  string start_date = 4;
+  string end_date = 5;
+  string units = 6;
+  string event = 7 [(validate.rules).string = {in:["uplink", "downlink", ""]}];
+}
+
+message ListReadingsResponse {
+  Readings readings = 1;
+}

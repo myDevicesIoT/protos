@@ -1,0 +1,46 @@
+
+syntax = "proto3";
+
+package pkg.proto.reading.v1;
+option go_package = "github.com/mydevicesiot/protos/pkg/proto/reading/v1;proto";
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "pkg/proto/common/v1/common.proto";
+
+// ListReadingsParam for bll inner usage
+message ListReadingsParam {
+    common.v1.PaginationParam pagination = 1;
+    string device_id = 2;
+    string type = 3;
+    string start_date = 4;
+    string end_date = 5;
+    string units = 6;
+    string event = 7;
+    string application_id = 8;
+}
+
+// ListReadingsOptions
+message ListReadingsOptions  {
+	repeated common.v1.OrderField OrderFields= 1;
+    repeated string SelectFields = 2;
+}
+
+message Reading {
+    google.protobuf.Timestamp created_at = 1 [json_name="created_at"];
+    // @inject_tag: faker:"uuid_hyphenated"
+    string device_id=2 [json_name="device_id"];
+    // @inject_tag: faker:"-"
+    google.protobuf.Struct sensors=3 [json_name = "sensors"];
+    // @inject_tag: faker:"uuid_hyphenated"
+    string correlation_id=4 [json_name="correlation_id"];
+    // @inject_tag: faker:"uuid_hyphenated"
+    string application_id=5 [json_name="application_id"];
+    google.protobuf.Timestamp updated_at = 6 [json_name="updated_at"];
+}
+
+message Readings {
+    repeated Reading data = 1 [json_name="readings"];
+    common.v1.PaginationResult pagination = 2;
+}
+

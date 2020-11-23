@@ -1,0 +1,56 @@
+
+syntax = "proto3";
+
+package pkg.proto.state.v1;
+option go_package = "github.com/mydevicesiot/protos/pkg/proto/state/v1;proto";
+
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "pkg/proto/common/v1/common.proto";
+
+enum DeviceStatus {
+    UNKNOWN_STATUS = 0;
+    ONLINE = 1;
+    OFFLINE = 2;
+}
+
+// ListDeviceStatesParam for bll inner usage
+message ListDeviceStatesParam {
+    common.v1.PaginationParam pagination = 1;
+    repeated string devices = 2;
+    string event = 3;
+    string units = 4;
+    string format = 5;
+}
+
+// ListDeviceStatesOptions
+message ListDeviceStatesOptions  {
+	repeated common.v1.OrderField OrderFields= 1;
+}
+
+message DeviceState {
+    // @inject_tag: faker:"uuid_hyphenated"
+    string device_id=1 [json_name="device_id"];
+    // @inject_tag: faker:"oneof: 1, 0"
+    int64 status = 2;
+    // @inject_tag: faker:"-"
+    google.protobuf.Struct sensors=3 [json_name = "sensors"];
+    // @inject_tag: faker:"uuid_hyphenated"
+    string correlation_id=4 [json_name="correlation_id"];
+    // @inject_tag: faker:"mac_address"
+    string hardware_id=5 [json_name="hardware_id"];
+    // @inject_tag: faker:"uuid_hyphenated"
+    string application_id=6 [json_name="application_id"];
+    // @inject_tag: faker:"oneof: 1, 0"
+    int64 type=7;
+    int64 status_interval=8 [json_name="status_interval"];
+    google.protobuf.Timestamp status_updated_at=9 [json_name="status_updated_at"];
+    google.protobuf.Timestamp created_at = 10 [json_name="created_at"];
+    google.protobuf.Timestamp updated_at = 11 [json_name="updated_at"];
+}
+
+message DeviceStates {
+    repeated DeviceState data = 1 [json_name="devices"];
+    common.v1.PaginationResult pagination = 2;
+}
+

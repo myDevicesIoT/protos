@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package pkg.proto.state.v1;
+option go_package = "github.com/mydevicesiot/protos/pkg/proto/state/v1;proto";
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+import "pkg/proto/state/v1/types.proto";
+import "pkg/proto/common/v1/common.proto";
+
+service StateService {
+  /*
+    get device state
+  */
+  rpc Get(GetDeviceStateRequest) returns (GetDeviceStateResponse) {
+    option (google.api.http) = {
+      get: "/v1/api/devices/{device_id}/state"
+      response_body : "device"
+      additional_bindings {
+        get: "/v1/api/devices/{device_id}/channels/{channel}/state"
+      }
+    };
+  }
+
+  /*
+    get devices state
+  */
+  rpc List(ListDeviceStatesRequest) returns (ListDeviceStatesResponse) {
+    option (google.api.http) = {
+      get: "/v1/api/devices/state"
+      response_body : "devices"
+    };
+  }
+}
+
+message GetDeviceStateRequest {
+  string device_id = 1 [(validate.rules).string.len = 36];
+  string channel = 2;
+  string units = 3;
+}
+
+message GetDeviceStateResponse {
+  DeviceState device = 1;
+}
+
+message ListDeviceStatesRequest {
+  repeated string devices = 1 [(validate.rules).repeated.min_items = 1];
+  string event = 2 [(validate.rules).string = {in:["uplink", "downlink", ""]}];
+  string units = 3;
+  common.v1.PaginationParam pagination=4 [(validate.rules).message.required = true];
+}
+
+message ListDeviceStatesResponse {
+  DeviceStates devices = 1;
+}
