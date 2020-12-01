@@ -2,11 +2,11 @@
 // source: pkg/proto/reading/v1/reading.proto
 
 /*
-Package proto is a reverse proxy.
+Package reading is a reverse proxy.
 
 It translates gRPC into RESTful JSON APIs.
 */
-package proto
+package reading
 
 import (
 	"context"

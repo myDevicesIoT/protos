@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package pkg.proto.state.v1;
-option go_package = "github.com/myDevicesIoT/protos/pkg/proto/state/v1;proto";
+option go_package = "github.com/myDevicesIoT/protos/pkg/proto/state/v1;state";
 
 import "google/api/annotations.proto";
 import "validate/validate.proto";
