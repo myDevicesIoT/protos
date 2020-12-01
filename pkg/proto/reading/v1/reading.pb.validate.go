@@ -61,19 +61,34 @@ func (m *ListReadingsRequest) Validate() error {
 		}
 	}
 
-	if utf8.RuneCountInString(m.GetDeviceId()) != 36 {
+	if err := m._validateUuid(m.GetDeviceId()); err != nil {
 		return ListReadingsRequestValidationError{
 			field:  "DeviceId",
-			reason: "value length must be 36 runes",
+			reason: "value must be a valid UUID",
+			cause:  err,
 		}
-
 	}
 
-	// no validation rules for Type
+	if _, ok := _ListReadingsRequest_Type_InLookup[m.GetType()]; !ok {
+		return ListReadingsRequestValidationError{
+			field:  "Type",
+			reason: "value must be in list [custom]",
+		}
+	}
 
-	// no validation rules for StartDate
+	if !_ListReadingsRequest_StartDate_Pattern.MatchString(m.GetStartDate()) {
+		return ListReadingsRequestValidationError{
+			field:  "StartDate",
+			reason: "value does not match regex pattern \"^(\\\\d{13})|(\\\\d{4}-\\\\d{2}-\\\\d{2}T\\\\d{2}:\\\\d{2}:\\\\d{2}\\\\.\\\\d{3}Z)$\"",
+		}
+	}
 
-	// no validation rules for EndDate
+	if !_ListReadingsRequest_EndDate_Pattern.MatchString(m.GetEndDate()) {
+		return ListReadingsRequestValidationError{
+			field:  "EndDate",
+			reason: "value does not match regex pattern \"^(\\\\d{13})|(\\\\d{4}-\\\\d{2}-\\\\d{2}T\\\\d{2}:\\\\d{2}:\\\\d{2}\\\\.\\\\d{3}Z)$\"",
+		}
+	}
 
 	// no validation rules for Units
 
@@ -82,6 +97,14 @@ func (m *ListReadingsRequest) Validate() error {
 			field:  "Event",
 			reason: "value must be in list [uplink downlink ]",
 		}
+	}
+
+	return nil
+}
+
+func (m *ListReadingsRequest) _validateUuid(uuid string) error {
+	if matched := _reading_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
 	}
 
 	return nil
@@ -142,6 +165,14 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ListReadingsRequestValidationError{}
+
+var _ListReadingsRequest_Type_InLookup = map[string]struct{}{
+	"custom": {},
+}
+
+var _ListReadingsRequest_StartDate_Pattern = regexp.MustCompile("^(\\d{13})|(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z)$")
+
+var _ListReadingsRequest_EndDate_Pattern = regexp.MustCompile("^(\\d{13})|(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z)$")
 
 var _ListReadingsRequest_Event_InLookup = map[string]struct{}{
 	"uplink":   {},

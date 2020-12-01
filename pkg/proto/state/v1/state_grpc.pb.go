@@ -17,11 +17,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type StateServiceClient interface {
-	//
-	//get device state
+	// get device state
 	Get(ctx context.Context, in *GetDeviceStateRequest, opts ...grpc.CallOption) (*GetDeviceStateResponse, error)
-	//
-	//get devices state
+	// list devices state
 	List(ctx context.Context, in *ListDeviceStatesRequest, opts ...grpc.CallOption) (*ListDeviceStatesResponse, error)
 }
 
@@ -55,11 +53,9 @@ func (c *stateServiceClient) List(ctx context.Context, in *ListDeviceStatesReque
 // All implementations should embed UnimplementedStateServiceServer
 // for forward compatibility
 type StateServiceServer interface {
-	//
-	//get device state
+	// get device state
 	Get(context.Context, *GetDeviceStateRequest) (*GetDeviceStateResponse, error)
-	//
-	//get devices state
+	// list devices state
 	List(context.Context, *ListDeviceStatesRequest) (*ListDeviceStatesResponse, error)
 }
 

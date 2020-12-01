@@ -44,17 +44,25 @@ func (m *GetDeviceStateRequest) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetDeviceId()) != 36 {
+	if err := m._validateUuid(m.GetDeviceId()); err != nil {
 		return GetDeviceStateRequestValidationError{
 			field:  "DeviceId",
-			reason: "value length must be 36 runes",
+			reason: "value must be a valid UUID",
+			cause:  err,
 		}
-
 	}
 
 	// no validation rules for Channel
 
 	// no validation rules for Units
+
+	return nil
+}
+
+func (m *GetDeviceStateRequest) _validateUuid(uuid string) error {
+	if matched := _state_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
+	}
 
 	return nil
 }

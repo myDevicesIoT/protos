@@ -9,9 +9,8 @@ import "pkg/proto/state/v1/types.proto";
 import "pkg/proto/common/v1/common.proto";
 
 service StateService {
-  /*
-    get device state
-  */
+  
+  // get device state
   rpc Get(GetDeviceStateRequest) returns (GetDeviceStateResponse) {
     option (google.api.http) = {
       get: "/v1/api/devices/{device_id}/state"
@@ -22,9 +21,8 @@ service StateService {
     };
   }
 
-  /*
-    get devices state
-  */
+
+  // list devices state
   rpc List(ListDeviceStatesRequest) returns (ListDeviceStatesResponse) {
     option (google.api.http) = {
       get: "/v1/api/devices/state"
@@ -34,7 +32,7 @@ service StateService {
 }
 
 message GetDeviceStateRequest {
-  string device_id = 1 [(validate.rules).string.len = 36];
+  string device_id = 1 [(validate.rules).string.uuid = true];
   string channel = 2;
   string units = 3;
 }

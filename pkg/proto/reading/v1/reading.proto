@@ -23,10 +23,15 @@ service ReadingService {
 
 message ListReadingsRequest {
   common.v1.PaginationParam pagination=1 [(validate.rules).message.required = true];
-  string device_id = 2 [(validate.rules).string.len = 36];
-  string type = 3;
-  string start_date = 4;
-  string end_date = 5;
+  string device_id = 2 [(validate.rules).string.uuid = true];
+  string type = 3 [(validate.rules).string = {in:["custom"]}];
+  // 1606849292000 or 2017-06-17T00:00:00.000Z
+  string start_date = 4 [(validate.rules).string = {
+    pattern:   "^(\\d{13})|(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z)$",
+  }];
+  string end_date = 5 [(validate.rules).string = {
+    pattern:   "^(\\d{13})|(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z)$",
+  }];
   string units = 6;
   string event = 7 [(validate.rules).string = {in:["uplink", "downlink", ""]}];
 }
