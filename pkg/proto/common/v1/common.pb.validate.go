@@ -46,10 +46,10 @@ func (m *PaginationParam) Validate() error {
 
 	// no validation rules for OnlyCount
 
-	if m.GetCurrent() < 1 {
+	if m.GetCurrent() < 0 {
 		return PaginationParamValidationError{
 			field:  "Current",
-			reason: "value must be greater than or equal to 1",
+			reason: "value must be greater than or equal to 0",
 		}
 	}
 
