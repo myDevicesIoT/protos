@@ -211,19 +211,19 @@ type DeviceState struct {
 	unknownFields protoimpl.UnknownFields
 
 	// @inject_tag: faker:"uuid_hyphenated"
-	DeviceId string `protobuf:"bytes,1,opt,name=device_id,proto3" json:"device_id,omitempty" faker:"uuid_hyphenated"`
+	DeviceId string `protobuf:"bytes,1,opt,name=device_id,proto3" json:"device_id,omitempty"`
 	// @inject_tag: faker:"oneof: 1, 0"
-	Status int64 `protobuf:"varint,2,opt,name=status,proto3" json:"status,omitempty" faker:"oneof: 1, 0"`
+	Status int64 `protobuf:"varint,2,opt,name=status,proto3" json:"status,omitempty"`
 	// @inject_tag: faker:"-"
-	Sensors *_struct.Struct `protobuf:"bytes,3,opt,name=sensors,proto3" json:"sensors,omitempty" faker:"-"`
+	Sensors *_struct.Struct `protobuf:"bytes,3,opt,name=sensors,proto3" json:"sensors,omitempty"`
 	// @inject_tag: faker:"uuid_hyphenated"
-	CorrelationId string `protobuf:"bytes,4,opt,name=correlation_id,proto3" json:"correlation_id,omitempty" faker:"uuid_hyphenated"`
+	CorrelationId string `protobuf:"bytes,4,opt,name=correlation_id,proto3" json:"correlation_id,omitempty"`
 	// @inject_tag: faker:"mac_address"
-	HardwareId string `protobuf:"bytes,5,opt,name=hardware_id,proto3" json:"hardware_id,omitempty" faker:"mac_address"`
+	HardwareId string `protobuf:"bytes,5,opt,name=hardware_id,proto3" json:"hardware_id,omitempty"`
 	// @inject_tag: faker:"uuid_hyphenated"
-	ApplicationId string `protobuf:"bytes,6,opt,name=application_id,proto3" json:"application_id,omitempty" faker:"uuid_hyphenated"`
+	ApplicationId string `protobuf:"bytes,6,opt,name=application_id,proto3" json:"application_id,omitempty"`
 	// @inject_tag: faker:"oneof: 1, 0"
-	Type            int64                `protobuf:"varint,7,opt,name=type,proto3" json:"type,omitempty" faker:"oneof: 1, 0"`
+	Type            int64                `protobuf:"varint,7,opt,name=type,proto3" json:"type,omitempty"`
 	StatusInterval  int64                `protobuf:"varint,8,opt,name=status_interval,proto3" json:"status_interval,omitempty"`
 	StatusUpdatedAt *timestamp.Timestamp `protobuf:"bytes,9,opt,name=status_updated_at,proto3" json:"status_updated_at,omitempty"`
 	CreatedAt       *timestamp.Timestamp `protobuf:"bytes,10,opt,name=created_at,proto3" json:"created_at,omitempty"`

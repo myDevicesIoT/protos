@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package pkg.proto.notification.v1;
+
+option go_package = "github.com/myDevicesIoT/protos/pkg/proto/notification/v1;notification";
+
+import "google/protobuf/timestamp.proto";
+
+message Rule {
+    string id = 1;
+    string application_id = 2;
+    string account_id = 3;
+    bool recipient = 4;
+    string date_sent = 5;
+    string method = 6;
+    string type = 7;
+    string error_message = 8;
+    string message = 9;
+    string service = 10;
+    string service_id = 11;
+    string service_log_id = 12;
+    string config_id = 13;
+    string status = 14;
+    google.protobuf.Timestamp created_at = 15;
+    google.protobuf.Timestamp updated_at = 16;
+}

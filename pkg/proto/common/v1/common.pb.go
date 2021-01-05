@@ -542,7 +542,7 @@ type Sensor struct {
 	Vt      string  `protobuf:"bytes,9,opt,name=vt,proto3" json:"vt,omitempty"`
 	Geo     *LatLon `protobuf:"bytes,10,opt,name=geo,proto3" json:"geo,omitempty"`
 	// @inject_tag: faker:"-"
-	Data *_struct.Struct `protobuf:"bytes,11,opt,name=data,proto3" json:"data,omitempty" faker:"-"`
+	Data *_struct.Struct `protobuf:"bytes,11,opt,name=data,proto3" json:"data,omitempty"`
 }
 
 func (x *Sensor) Reset() {

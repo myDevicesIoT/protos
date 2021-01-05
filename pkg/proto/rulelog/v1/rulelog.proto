@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package pkg.proto.rulelog.v1;
+option go_package = "github.com/myDevicesIoT/protos/pkg/proto/rulelog/v1;rulelog";
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+import "pkg/proto/rulelog/v1/types.proto";
+import "pkg/proto/common/v1/common.proto";
+
+
+service RuleLogService {
+  // get rule
+  rpc Get(GetRuleLogRequest) returns (GetRuleLogResponse) {
+    option (google.api.http) = {
+      get: "/v1/api/rule-logs/{id}"
+      response_body : "log"
+    };
+  }
+
+  // list rules
+  rpc List(ListRuleLogsRequest) returns (ListRuleLogsResponse) {
+    option (google.api.http) = {
+      get: "/v1/api/rule-logs"
+      response_body : "logs"
+    };
+  }
+}
+
+message GetRuleLogRequest {
+  string id = 1;
+}
+
+message GetRuleLogResponse {
+  RuleLog log = 1;
+}
+
+message ListRuleLogsRequest {
+  string rule_id = 1;
+  string application_id = 2;
+  string account_id = 3;
+  common.v1.PaginationParam pagination=4 [(validate.rules).message.required = true];
+}
+
+message ListRuleLogsResponse {
+  RuleLogs logs = 1;
+}

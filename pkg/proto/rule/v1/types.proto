@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package pkg.proto.rule.v1;
+
+option go_package = "github.com/myDevicesIoT/protos/pkg/rule/v1;rule";
+
+import "pkg/proto/common/v1/common.proto";
+
+message Condition {
+    string operator = 1;
+    string value = 2;
+    string id = 3;
+}
+
+message Notification {
+    string method = 1;
+    string value = 2;
+    string body = 3;
+    string type = 4;
+    string user_id = 5;
+    map<string,string> data = 6;
+}
+
+message Webhook {
+    string url = 1;
+    string method = 2;
+}
+
+message Action {
+    string id = 1;
+    string channel = 2;
+    string unit = 3;
+    string value = 4;
+}
+
+message Trigger {
+    string id = 1;
+    string channel = 2;
+    string unit = 3;
+    string triggers_combination = 4;
+    Condition conditions = 5;
+}
+
+message Overide {
+    string start = 1;
+    string end = 2;
+    int64 delay = 3;
+    string starting_at = 4;
+    int64 timeout = 5;
+    int64 count = 6;
+    repeated Trigger triggers = 7;
+    string triggers_combination = 8;
+    string type = 9;
+}
+
+message Rule {
+    string title = 1;
+    bool auto_acknowledge = 2;
+    bool enabled = 3;
+    bool triggered = 4;
+    string last_triggered = 5;
+    string last_triggered_log_id = 6;
+    int64 total_triggered = 7;
+    string status = 8;
+    string account_id = 9;
+    string application_id = 10;
+    string updated_at = 11;
+    string created_at = 12;
+    repeated Notification notifications = 13;
+    repeated Webhook http_push = 14;
+    repeated Action actions = 15;
+    string triggers_combination = 16;
+    repeated Trigger triggers = 17;
+    string version = 18;
+    bool trigger_on_condition_exit = 19;
+    int64 delay = 20;
+    string starting_at = 21;
+    repeated Overide overrides = 22;
+    string id = 23;
+}
+
+message Rules {
+    repeated Rule data = 1 [json_name="rules"];
+    common.v1.PaginationResult pagination = 2;
+}
+

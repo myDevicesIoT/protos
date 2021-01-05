@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+package pkg.proto.rulelog.v1;
+
+option go_package = "github.com/myDevicesIoT/protos/pkg/rulelog/v1;rulelog";
+
+import "google/protobuf/timestamp.proto";
+import "pkg/proto/common/v1/common.proto";
+
+message Delay {
+    int64 count = 1;
+    int64 time = 2;
+
+}
+message TriggerData {
+	string TriggerType = 1;
+	string TriggersCombination  = 2;
+	repeated Trigger triggers  = 3;
+	Delay delay = 4;
+}
+
+message Action {
+    string type = 1; 
+    string value = 2; 
+    google.protobuf.Timestamp date_requested = 3; 
+    string error_message = 4; 
+}
+
+message Condition {
+    string operator = 1;
+    string value = 2;
+    string id = 3;
+}
+
+message Trigger {
+    string id = 1;
+    string channel = 2;
+    string unit = 3;
+    string triggers_combination = 4;
+    Condition conditions = 5;
+}
+
+message RuleLog {
+    string id = 1;
+    string account_id = 2;
+    string application_id = 3;
+    string rule_id = 4;
+    string status = 5;
+    string thing_id = 6;
+    string sensor_id = 7;
+    bool triggered = 8;
+    string date_triggered = 9;
+    string trigger_reading = 10;
+    string trigger_unit = 11;
+    TriggerData trigger_data = 12;
+    bool acknowledged_required = 13;
+    bool acknowledged = 14;
+    string date_acknowledged = 15;
+    repeated Action actions = 16;
+    repeated Condition conditions = 17;
+}
+
+message RuleLogs {
+    repeated RuleLog data = 1 [json_name="logs"];
+    common.v1.PaginationResult pagination = 2;
+}

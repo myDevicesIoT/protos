@@ -195,13 +195,13 @@ type Reading struct {
 
 	CreatedAt *timestamp.Timestamp `protobuf:"bytes,1,opt,name=created_at,proto3" json:"created_at,omitempty"`
 	// @inject_tag: faker:"uuid_hyphenated"
-	DeviceId string `protobuf:"bytes,2,opt,name=device_id,proto3" json:"device_id,omitempty" faker:"uuid_hyphenated"`
+	DeviceId string `protobuf:"bytes,2,opt,name=device_id,proto3" json:"device_id,omitempty"`
 	// @inject_tag: faker:"-"
-	Sensors *_struct.Struct `protobuf:"bytes,3,opt,name=sensors,proto3" json:"sensors,omitempty" faker:"-"`
+	Sensors *_struct.Struct `protobuf:"bytes,3,opt,name=sensors,proto3" json:"sensors,omitempty"`
 	// @inject_tag: faker:"uuid_hyphenated"
-	CorrelationId string `protobuf:"bytes,4,opt,name=correlation_id,proto3" json:"correlation_id,omitempty" faker:"uuid_hyphenated"`
+	CorrelationId string `protobuf:"bytes,4,opt,name=correlation_id,proto3" json:"correlation_id,omitempty"`
 	// @inject_tag: faker:"uuid_hyphenated"
-	ApplicationId string               `protobuf:"bytes,5,opt,name=application_id,proto3" json:"application_id,omitempty" faker:"uuid_hyphenated"`
+	ApplicationId string               `protobuf:"bytes,5,opt,name=application_id,proto3" json:"application_id,omitempty"`
 	UpdatedAt     *timestamp.Timestamp `protobuf:"bytes,6,opt,name=updated_at,proto3" json:"updated_at,omitempty"`
 }
 

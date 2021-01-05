@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package pkg.proto.rule.v1;
+option go_package = "github.com/myDevicesIoT/protos/pkg/proto/rule/v1;rule";
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+import "pkg/proto/rule/v1/types.proto";
+import "pkg/proto/common/v1/common.proto";
+
+service RuleService {
+  // get rule
+  rpc Get(GetRuleRequest) returns (GetRuleResponse) {
+    option (google.api.http) = {
+      get: "/v1/api/rules/{id}"
+      response_body : "rule"
+      additional_bindings {
+        get: "/v1/api/rules/thing/{id}"
+      }
+    };
+  }
+
+  // list rules
+  rpc List(ListRulesRequest) returns (ListRulesResponse) {
+    option (google.api.http) = {
+      get: "/v1/api/rules"
+      response_body : "rules"
+    };
+  }
+}
+
+message GetRuleRequest {
+  string id = 1;
+}
+
+message GetRuleResponse {
+  Rule rule = 1;
+}
+
+message ListRulesRequest {
+  repeated string rules = 1;
+  string application_id = 2;
+  string account_id = 3;
+  common.v1.PaginationParam pagination=4 [(validate.rules).message.required = true];
+}
+
+message ListRulesResponse {
+  Rules rules = 1;
+}
