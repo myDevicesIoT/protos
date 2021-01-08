@@ -4,8 +4,6 @@ package rule
 
 import (
 	context "context"
-	empty "github.com/golang/protobuf/ptypes/empty"
-	v1 "github.com/myDevicesIoT/protos/pkg/rule/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -19,15 +17,16 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RuleServiceClient interface {
-	// get rule
+	// Get rule
 	Get(ctx context.Context, in *GetRuleRequest, opts ...grpc.CallOption) (*GetRuleResponse, error)
-	// list rules
+	// List rules
 	List(ctx context.Context, in *ListRulesRequest, opts ...grpc.CallOption) (*ListRulesResponse, error)
-	// create rule
-	Create(ctx context.Context, in *CreatRuleRequest, opts ...grpc.CallOption) (*v1.Rule, error)
-	// update rule
-	Update(ctx context.Context, in *UpdateRuleRequest, opts ...grpc.CallOption) (*empty.Empty, error)
-	Delete(ctx context.Context, in *DeleteRuleRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	// Create rule
+	Create(ctx context.Context, in *CreatRuleRequest, opts ...grpc.CallOption) (*CreatRuleResponse, error)
+	// Update rule
+	Update(ctx context.Context, in *UpdateRuleRequest, opts ...grpc.CallOption) (*UpdateRuleResponse, error)
+	// Delete rule
+	Delete(ctx context.Context, in *DeleteRuleRequest, opts ...grpc.CallOption) (*DeleteRuleResponse, error)
 }
 
 type ruleServiceClient struct {
@@ -56,8 +55,8 @@ func (c *ruleServiceClient) List(ctx context.Context, in *ListRulesRequest, opts
 	return out, nil
 }
 
-func (c *ruleServiceClient) Create(ctx context.Context, in *CreatRuleRequest, opts ...grpc.CallOption) (*v1.Rule, error) {
-	out := new(v1.Rule)
+func (c *ruleServiceClient) Create(ctx context.Context, in *CreatRuleRequest, opts ...grpc.CallOption) (*CreatRuleResponse, error) {
+	out := new(CreatRuleResponse)
 	err := c.cc.Invoke(ctx, "/pkg.proto.rule.v1.RuleService/Create", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -65,8 +64,8 @@ func (c *ruleServiceClient) Create(ctx context.Context, in *CreatRuleRequest, op
 	return out, nil
 }
 
-func (c *ruleServiceClient) Update(ctx context.Context, in *UpdateRuleRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *ruleServiceClient) Update(ctx context.Context, in *UpdateRuleRequest, opts ...grpc.CallOption) (*UpdateRuleResponse, error) {
+	out := new(UpdateRuleResponse)
 	err := c.cc.Invoke(ctx, "/pkg.proto.rule.v1.RuleService/Update", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -74,8 +73,8 @@ func (c *ruleServiceClient) Update(ctx context.Context, in *UpdateRuleRequest, o
 	return out, nil
 }
 
-func (c *ruleServiceClient) Delete(ctx context.Context, in *DeleteRuleRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
-	out := new(empty.Empty)
+func (c *ruleServiceClient) Delete(ctx context.Context, in *DeleteRuleRequest, opts ...grpc.CallOption) (*DeleteRuleResponse, error) {
+	out := new(DeleteRuleResponse)
 	err := c.cc.Invoke(ctx, "/pkg.proto.rule.v1.RuleService/Delete", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -87,15 +86,16 @@ func (c *ruleServiceClient) Delete(ctx context.Context, in *DeleteRuleRequest, o
 // All implementations should embed UnimplementedRuleServiceServer
 // for forward compatibility
 type RuleServiceServer interface {
-	// get rule
+	// Get rule
 	Get(context.Context, *GetRuleRequest) (*GetRuleResponse, error)
-	// list rules
+	// List rules
 	List(context.Context, *ListRulesRequest) (*ListRulesResponse, error)
-	// create rule
-	Create(context.Context, *CreatRuleRequest) (*v1.Rule, error)
-	// update rule
-	Update(context.Context, *UpdateRuleRequest) (*empty.Empty, error)
-	Delete(context.Context, *DeleteRuleRequest) (*empty.Empty, error)
+	// Create rule
+	Create(context.Context, *CreatRuleRequest) (*CreatRuleResponse, error)
+	// Update rule
+	Update(context.Context, *UpdateRuleRequest) (*UpdateRuleResponse, error)
+	// Delete rule
+	Delete(context.Context, *DeleteRuleRequest) (*DeleteRuleResponse, error)
 }
 
 // UnimplementedRuleServiceServer should be embedded to have forward compatible implementations.
@@ -108,13 +108,13 @@ func (UnimplementedRuleServiceServer) Get(context.Context, *GetRuleRequest) (*Ge
 func (UnimplementedRuleServiceServer) List(context.Context, *ListRulesRequest) (*ListRulesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
 }
-func (UnimplementedRuleServiceServer) Create(context.Context, *CreatRuleRequest) (*v1.Rule, error) {
+func (UnimplementedRuleServiceServer) Create(context.Context, *CreatRuleRequest) (*CreatRuleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedRuleServiceServer) Update(context.Context, *UpdateRuleRequest) (*empty.Empty, error) {
+func (UnimplementedRuleServiceServer) Update(context.Context, *UpdateRuleRequest) (*UpdateRuleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedRuleServiceServer) Delete(context.Context, *DeleteRuleRequest) (*empty.Empty, error) {
+func (UnimplementedRuleServiceServer) Delete(context.Context, *DeleteRuleRequest) (*DeleteRuleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 

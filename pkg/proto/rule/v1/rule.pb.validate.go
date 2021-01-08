@@ -416,6 +416,75 @@ var _ interface {
 	ErrorName() string
 } = CreatRuleRequestValidationError{}
 
+// Validate checks the field values on CreatRuleResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *CreatRuleResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Id
+
+	return nil
+}
+
+// CreatRuleResponseValidationError is the validation error returned by
+// CreatRuleResponse.Validate if the designated constraints aren't met.
+type CreatRuleResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreatRuleResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreatRuleResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreatRuleResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreatRuleResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreatRuleResponseValidationError) ErrorName() string {
+	return "CreatRuleResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e CreatRuleResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreatRuleResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreatRuleResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreatRuleResponseValidationError{}
+
 // Validate checks the field values on UpdateRuleRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, an
 // error is returned.
@@ -493,6 +562,75 @@ var _ interface {
 	ErrorName() string
 } = UpdateRuleRequestValidationError{}
 
+// Validate checks the field values on UpdateRuleResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *UpdateRuleResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Updated
+
+	return nil
+}
+
+// UpdateRuleResponseValidationError is the validation error returned by
+// UpdateRuleResponse.Validate if the designated constraints aren't met.
+type UpdateRuleResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdateRuleResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdateRuleResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdateRuleResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdateRuleResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdateRuleResponseValidationError) ErrorName() string {
+	return "UpdateRuleResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdateRuleResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdateRuleResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdateRuleResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdateRuleResponseValidationError{}
+
 // Validate checks the field values on DeleteRuleRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, an
 // error is returned.
@@ -561,3 +699,72 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DeleteRuleRequestValidationError{}
+
+// Validate checks the field values on DeleteRuleResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *DeleteRuleResponse) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Deleted
+
+	return nil
+}
+
+// DeleteRuleResponseValidationError is the validation error returned by
+// DeleteRuleResponse.Validate if the designated constraints aren't met.
+type DeleteRuleResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteRuleResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteRuleResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteRuleResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteRuleResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteRuleResponseValidationError) ErrorName() string {
+	return "DeleteRuleResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteRuleResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteRuleResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteRuleResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteRuleResponseValidationError{}

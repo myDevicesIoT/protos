@@ -13,7 +13,7 @@
   "paths": {
     "/v1/api/rules": {
       "get": {
-        "summary": "list rules",
+        "summary": "List rules",
         "operationId": "RuleService_List",
         "responses": {
           "200": {
@@ -84,13 +84,13 @@
         ]
       },
       "post": {
-        "summary": "create rule",
+        "summary": "Create rule",
         "operationId": "RuleService_Create",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/protorulev1Rule"
+              "$ref": "#/definitions/v1CreatRuleResponse"
             }
           },
           "default": {
@@ -117,7 +117,7 @@
     },
     "/v1/api/rules/thing/{id}": {
       "get": {
-        "summary": "get rule",
+        "summary": "Get rule",
         "operationId": "RuleService_Get2",
         "responses": {
           "200": {
@@ -148,7 +148,7 @@
     },
     "/v1/api/rules/{id}": {
       "get": {
-        "summary": "get rule",
+        "summary": "Get rule",
         "operationId": "RuleService_Get",
         "responses": {
           "200": {
@@ -177,12 +177,13 @@
         ]
       },
       "delete": {
+        "summary": "Delete rule",
         "operationId": "RuleService_Delete",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "properties": {}
+              "$ref": "#/definitions/v1DeleteRuleResponse"
             }
           },
           "default": {
@@ -207,13 +208,13 @@
     },
     "/v1/api/rules/{rule.id}": {
       "put": {
-        "summary": "update rule",
+        "summary": "Update rule",
         "operationId": "RuleService_Update",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "properties": {}
+              "$ref": "#/definitions/v1UpdateRuleResponse"
             }
           },
           "default": {
@@ -244,13 +245,13 @@
         ]
       },
       "patch": {
-        "summary": "update rule",
+        "summary": "Update rule",
         "operationId": "RuleService_Update3",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "properties": {}
+              "$ref": "#/definitions/v1UpdateRuleResponse"
             }
           },
           "default": {
@@ -463,6 +464,23 @@
         }
       }
     },
+    "v1CreatRuleResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "v1DeleteRuleResponse": {
+      "type": "object",
+      "properties": {
+        "deleted": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
     "v1GetRuleResponse": {
       "type": "object",
       "properties": {
@@ -601,6 +619,15 @@
       "properties": {
         "rule": {
           "$ref": "#/definitions/protorulev1Rule"
+        }
+      }
+    },
+    "v1UpdateRuleResponse": {
+      "type": "object",
+      "properties": {
+        "updated": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },
