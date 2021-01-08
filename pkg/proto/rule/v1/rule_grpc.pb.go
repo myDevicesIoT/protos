@@ -4,6 +4,8 @@ package rule
 
 import (
 	context "context"
+	empty "github.com/golang/protobuf/ptypes/empty"
+	v1 "github.com/myDevicesIoT/protos/pkg/rule/v1"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -21,6 +23,11 @@ type RuleServiceClient interface {
 	Get(ctx context.Context, in *GetRuleRequest, opts ...grpc.CallOption) (*GetRuleResponse, error)
 	// list rules
 	List(ctx context.Context, in *ListRulesRequest, opts ...grpc.CallOption) (*ListRulesResponse, error)
+	// create rule
+	Create(ctx context.Context, in *CreatRuleRequest, opts ...grpc.CallOption) (*v1.Rule, error)
+	// update rule
+	Update(ctx context.Context, in *UpdateRuleRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	Delete(ctx context.Context, in *DeleteRuleRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 }
 
 type ruleServiceClient struct {
@@ -49,6 +56,33 @@ func (c *ruleServiceClient) List(ctx context.Context, in *ListRulesRequest, opts
 	return out, nil
 }
 
+func (c *ruleServiceClient) Create(ctx context.Context, in *CreatRuleRequest, opts ...grpc.CallOption) (*v1.Rule, error) {
+	out := new(v1.Rule)
+	err := c.cc.Invoke(ctx, "/pkg.proto.rule.v1.RuleService/Create", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ruleServiceClient) Update(ctx context.Context, in *UpdateRuleRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/pkg.proto.rule.v1.RuleService/Update", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ruleServiceClient) Delete(ctx context.Context, in *DeleteRuleRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
+	err := c.cc.Invoke(ctx, "/pkg.proto.rule.v1.RuleService/Delete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RuleServiceServer is the server API for RuleService service.
 // All implementations should embed UnimplementedRuleServiceServer
 // for forward compatibility
@@ -57,6 +91,11 @@ type RuleServiceServer interface {
 	Get(context.Context, *GetRuleRequest) (*GetRuleResponse, error)
 	// list rules
 	List(context.Context, *ListRulesRequest) (*ListRulesResponse, error)
+	// create rule
+	Create(context.Context, *CreatRuleRequest) (*v1.Rule, error)
+	// update rule
+	Update(context.Context, *UpdateRuleRequest) (*empty.Empty, error)
+	Delete(context.Context, *DeleteRuleRequest) (*empty.Empty, error)
 }
 
 // UnimplementedRuleServiceServer should be embedded to have forward compatible implementations.
@@ -68,6 +107,15 @@ func (UnimplementedRuleServiceServer) Get(context.Context, *GetRuleRequest) (*Ge
 }
 func (UnimplementedRuleServiceServer) List(context.Context, *ListRulesRequest) (*ListRulesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
+}
+func (UnimplementedRuleServiceServer) Create(context.Context, *CreatRuleRequest) (*v1.Rule, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedRuleServiceServer) Update(context.Context, *UpdateRuleRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+}
+func (UnimplementedRuleServiceServer) Delete(context.Context, *DeleteRuleRequest) (*empty.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 
 // UnsafeRuleServiceServer may be embedded to opt out of forward compatibility for this service.
@@ -117,6 +165,60 @@ func _RuleService_List_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RuleService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreatRuleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RuleServiceServer).Create(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pkg.proto.rule.v1.RuleService/Create",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RuleServiceServer).Create(ctx, req.(*CreatRuleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RuleService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRuleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RuleServiceServer).Update(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pkg.proto.rule.v1.RuleService/Update",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RuleServiceServer).Update(ctx, req.(*UpdateRuleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _RuleService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRuleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RuleServiceServer).Delete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pkg.proto.rule.v1.RuleService/Delete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RuleServiceServer).Delete(ctx, req.(*DeleteRuleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _RuleService_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "pkg.proto.rule.v1.RuleService",
 	HandlerType: (*RuleServiceServer)(nil),
@@ -128,6 +230,18 @@ var _RuleService_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "List",
 			Handler:    _RuleService_List_Handler,
+		},
+		{
+			MethodName: "Create",
+			Handler:    _RuleService_Create_Handler,
+		},
+		{
+			MethodName: "Update",
+			Handler:    _RuleService_Update_Handler,
+		},
+		{
+			MethodName: "Delete",
+			Handler:    _RuleService_Delete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

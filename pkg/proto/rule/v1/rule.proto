@@ -7,6 +7,7 @@ import "google/api/annotations.proto";
 import "validate/validate.proto";
 import "pkg/proto/rule/v1/types.proto";
 import "pkg/proto/common/v1/common.proto";
+import "google/protobuf/empty.proto";
 
 service RuleService {
   // get rule
@@ -25,6 +26,38 @@ service RuleService {
     option (google.api.http) = {
       get: "/v1/api/rules"
       response_body : "rules"
+    };
+  }
+
+  // create rule
+  rpc Create(CreatRuleRequest) returns (Rule) {
+    option (google.api.http) = {
+      post: "/v1/api/rules"
+      body: "*"
+    };
+  };
+
+  // update rule
+  rpc Update(UpdateRuleRequest) returns (google.protobuf.Empty) {
+		option (google.api.http) = {
+			put: "/v1/api/rules/{rule.id}"
+			body: "rule"
+			additional_bindings: [
+				{
+					patch: "/v1/api/rules/{rule.id}"
+					body: "rule"
+				},
+				{
+					patch: "/v1/api/rules/{rule.id}"
+					body: "*"
+				}
+			]
+		};
+  }
+  
+	rpc Delete(DeleteRuleRequest) returns (google.protobuf.Empty) {
+		option (google.api.http) = {
+			delete: "/v1/api/rules/{id}"
     };
   }
 }
@@ -46,4 +79,16 @@ message ListRulesRequest {
 
 message ListRulesResponse {
   Rules rules = 1;
+}
+
+message CreatRuleRequest {
+  Rule rule = 1;
+}
+
+message UpdateRuleRequest {
+  Rule rule = 1;
+}
+
+message DeleteRuleRequest {
+  string id = 1;
 }

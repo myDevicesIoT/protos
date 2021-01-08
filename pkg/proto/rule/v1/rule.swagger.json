@@ -82,6 +82,37 @@
         "tags": [
           "RuleService"
         ]
+      },
+      "post": {
+        "summary": "create rule",
+        "operationId": "RuleService_Create",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protorulev1Rule"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreatRuleRequest"
+            }
+          }
+        ],
+        "tags": [
+          "RuleService"
+        ]
       }
     },
     "/v1/api/rules/thing/{id}": {
@@ -139,6 +170,110 @@
             "in": "path",
             "required": true,
             "type": "string"
+          }
+        ],
+        "tags": [
+          "RuleService"
+        ]
+      },
+      "delete": {
+        "operationId": "RuleService_Delete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "RuleService"
+        ]
+      }
+    },
+    "/v1/api/rules/{rule.id}": {
+      "put": {
+        "summary": "update rule",
+        "operationId": "RuleService_Update",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "rule.id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/protorulev1Rule"
+            }
+          }
+        ],
+        "tags": [
+          "RuleService"
+        ]
+      },
+      "patch": {
+        "summary": "update rule",
+        "operationId": "RuleService_Update3",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "rule.id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1UpdateRuleRequest"
+            }
           }
         ],
         "tags": [
@@ -320,6 +455,14 @@
         }
       }
     },
+    "v1CreatRuleRequest": {
+      "type": "object",
+      "properties": {
+        "rule": {
+          "$ref": "#/definitions/protorulev1Rule"
+        }
+      }
+    },
     "v1GetRuleResponse": {
       "type": "object",
       "properties": {
@@ -450,6 +593,14 @@
         },
         "pagination": {
           "$ref": "#/definitions/v1PaginationResult"
+        }
+      }
+    },
+    "v1UpdateRuleRequest": {
+      "type": "object",
+      "properties": {
+        "rule": {
+          "$ref": "#/definitions/protorulev1Rule"
         }
       }
     },

@@ -340,3 +340,224 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ListRulesResponseValidationError{}
+
+// Validate checks the field values on CreatRuleRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *CreatRuleRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetRule()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return CreatRuleRequestValidationError{
+				field:  "Rule",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// CreatRuleRequestValidationError is the validation error returned by
+// CreatRuleRequest.Validate if the designated constraints aren't met.
+type CreatRuleRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CreatRuleRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CreatRuleRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CreatRuleRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CreatRuleRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CreatRuleRequestValidationError) ErrorName() string { return "CreatRuleRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e CreatRuleRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCreatRuleRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CreatRuleRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CreatRuleRequestValidationError{}
+
+// Validate checks the field values on UpdateRuleRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *UpdateRuleRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetRule()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return UpdateRuleRequestValidationError{
+				field:  "Rule",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// UpdateRuleRequestValidationError is the validation error returned by
+// UpdateRuleRequest.Validate if the designated constraints aren't met.
+type UpdateRuleRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdateRuleRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdateRuleRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdateRuleRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdateRuleRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdateRuleRequestValidationError) ErrorName() string {
+	return "UpdateRuleRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdateRuleRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdateRuleRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdateRuleRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdateRuleRequestValidationError{}
+
+// Validate checks the field values on DeleteRuleRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *DeleteRuleRequest) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Id
+
+	return nil
+}
+
+// DeleteRuleRequestValidationError is the validation error returned by
+// DeleteRuleRequest.Validate if the designated constraints aren't met.
+type DeleteRuleRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteRuleRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteRuleRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteRuleRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteRuleRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteRuleRequestValidationError) ErrorName() string {
+	return "DeleteRuleRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteRuleRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteRuleRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteRuleRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteRuleRequestValidationError{}
