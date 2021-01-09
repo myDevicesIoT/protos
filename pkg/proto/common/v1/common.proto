@@ -31,6 +31,10 @@ message StatusResult {
     string status = 1;
 }
 
+message IDResult {
+    string id = 1;
+}
+
 message ErrorItem {
     int32 code = 1;
     string message = 2;

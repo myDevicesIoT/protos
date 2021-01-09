@@ -274,6 +274,72 @@ var _ interface {
 	ErrorName() string
 } = StatusResultValidationError{}
 
+// Validate checks the field values on IDResult with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *IDResult) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Id
+
+	return nil
+}
+
+// IDResultValidationError is the validation error returned by
+// IDResult.Validate if the designated constraints aren't met.
+type IDResultValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e IDResultValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e IDResultValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e IDResultValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e IDResultValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e IDResultValidationError) ErrorName() string { return "IDResultValidationError" }
+
+// Error satisfies the builtin error interface
+func (e IDResultValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sIDResult.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = IDResultValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = IDResultValidationError{}
+
 // Validate checks the field values on ErrorItem with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
 func (m *ErrorItem) Validate() error {
