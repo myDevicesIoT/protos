@@ -36,6 +36,368 @@ var (
 // define the regex for a UUID once up-front
 var _types_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
 
+// Validate checks the field values on GetRuleParam with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *GetRuleParam) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Id
+
+	return nil
+}
+
+// GetRuleParamValidationError is the validation error returned by
+// GetRuleParam.Validate if the designated constraints aren't met.
+type GetRuleParamValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetRuleParamValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetRuleParamValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetRuleParamValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetRuleParamValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetRuleParamValidationError) ErrorName() string { return "GetRuleParamValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetRuleParamValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetRuleParam.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetRuleParamValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetRuleParamValidationError{}
+
+// Validate checks the field values on ListRulesParam with the rules defined in
+// the proto definition for this message. If any rules are violated, an error
+// is returned.
+func (m *ListRulesParam) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetPagination()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ListRulesParamValidationError{
+				field:  "Pagination",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	// no validation rules for DeviceId
+
+	// no validation rules for LocationId
+
+	// no validation rules for ApplicationId
+
+	return nil
+}
+
+// ListRulesParamValidationError is the validation error returned by
+// ListRulesParam.Validate if the designated constraints aren't met.
+type ListRulesParamValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListRulesParamValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListRulesParamValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListRulesParamValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListRulesParamValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListRulesParamValidationError) ErrorName() string { return "ListRulesParamValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ListRulesParamValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListRulesParam.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListRulesParamValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListRulesParamValidationError{}
+
+// Validate checks the field values on ListRulesOptions with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *ListRulesOptions) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetOrderFields() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ListRulesOptionsValidationError{
+					field:  fmt.Sprintf("OrderFields[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ListRulesOptionsValidationError is the validation error returned by
+// ListRulesOptions.Validate if the designated constraints aren't met.
+type ListRulesOptionsValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ListRulesOptionsValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ListRulesOptionsValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ListRulesOptionsValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ListRulesOptionsValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ListRulesOptionsValidationError) ErrorName() string { return "ListRulesOptionsValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ListRulesOptionsValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sListRulesOptions.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ListRulesOptionsValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ListRulesOptionsValidationError{}
+
+// Validate checks the field values on UpdateRuleParam with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *UpdateRuleParam) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Id
+
+	return nil
+}
+
+// UpdateRuleParamValidationError is the validation error returned by
+// UpdateRuleParam.Validate if the designated constraints aren't met.
+type UpdateRuleParamValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdateRuleParamValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdateRuleParamValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdateRuleParamValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdateRuleParamValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdateRuleParamValidationError) ErrorName() string { return "UpdateRuleParamValidationError" }
+
+// Error satisfies the builtin error interface
+func (e UpdateRuleParamValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdateRuleParam.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdateRuleParamValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdateRuleParamValidationError{}
+
+// Validate checks the field values on DeleteRuleParam with the rules defined
+// in the proto definition for this message. If any rules are violated, an
+// error is returned.
+func (m *DeleteRuleParam) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Id
+
+	return nil
+}
+
+// DeleteRuleParamValidationError is the validation error returned by
+// DeleteRuleParam.Validate if the designated constraints aren't met.
+type DeleteRuleParamValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteRuleParamValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteRuleParamValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteRuleParamValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteRuleParamValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteRuleParamValidationError) ErrorName() string { return "DeleteRuleParamValidationError" }
+
+// Error satisfies the builtin error interface
+func (e DeleteRuleParamValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteRuleParam.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteRuleParamValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteRuleParamValidationError{}
+
 // Validate checks the field values on Condition with the rules defined in the
 // proto definition for this message. If any rules are violated, an error is returned.
 func (m *Condition) Validate() error {

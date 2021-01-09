@@ -6,6 +6,42 @@ option go_package = "github.com/myDevicesIoT/protos/pkg/rule/v1;rule";
 
 import "pkg/proto/common/v1/common.proto";
 
+// GetRuleParam
+message GetRuleParam {
+    string id = 1;
+}
+
+// ListRulesParam for bll inner usage
+message ListRulesParam {
+    common.v1.PaginationParam pagination = 1;
+    repeated string application_ids = 2;
+    repeated string device_ids = 3;
+    string status = 4;
+    bool enabled = 5;
+    string unit = 6;
+	// Online State
+	string rule_id = 7;
+	repeated string rule_ids = 8;
+    google.protobuf.Timestamp last_triggered=9;
+    
+}
+
+// ListRulesOptions
+message ListRulesOptions  {
+	repeated common.v1.OrderField OrderFields= 1;
+    repeated string SelectFields = 2;
+}
+
+// UpdateRuleParam
+message UpdateRuleParam  {
+	string id = 1;
+}
+
+// DeleteRuleParam
+message DeleteRuleParam  {
+	string id = 1;
+}
+
 message Condition {
     string operator = 1;
     string value = 2;
