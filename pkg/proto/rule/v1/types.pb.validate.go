@@ -121,11 +121,23 @@ func (m *ListRulesParam) Validate() error {
 		}
 	}
 
-	// no validation rules for DeviceId
+	// no validation rules for Status
 
-	// no validation rules for LocationId
+	// no validation rules for Enabled
 
-	// no validation rules for ApplicationId
+	// no validation rules for Unit
+
+	// no validation rules for RuleId
+
+	if v, ok := interface{}(m.GetLastTriggered()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ListRulesParamValidationError{
+				field:  "LastTriggered",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	return nil
 }

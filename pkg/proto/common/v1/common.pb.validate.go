@@ -44,12 +44,14 @@ func (m *PaginationParam) Validate() error {
 		return nil
 	}
 
-	// no validation rules for OnlyCount
+	// no validation rules for Pagination
 
-	if m.GetCurrent() < 0 {
+	// no validation rules for CountOnly
+
+	if m.GetPage() < 1 {
 		return PaginationParamValidationError{
-			field:  "Current",
-			reason: "value must be greater than or equal to 0",
+			field:  "Page",
+			reason: "value must be greater than or equal to 1",
 		}
 	}
 
@@ -134,9 +136,9 @@ func (m *PaginationResult) Validate() error {
 		}
 	}
 
-	if m.GetCurrent() < 1 {
+	if m.GetPage() < 1 {
 		return PaginationResultValidationError{
-			field:  "Current",
+			field:  "Page",
 			reason: "value must be greater than or equal to 1",
 		}
 	}

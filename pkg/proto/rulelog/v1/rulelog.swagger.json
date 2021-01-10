@@ -49,13 +49,19 @@
             "type": "string"
           },
           {
-            "name": "pagination.onlyCount",
+            "name": "pagination.pagination",
             "in": "query",
             "required": false,
             "type": "boolean"
           },
           {
-            "name": "pagination.current",
+            "name": "pagination.countOnly",
+            "in": "query",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "name": "pagination.page",
             "in": "query",
             "required": false,
             "type": "string",
@@ -227,10 +233,13 @@
     "v1PaginationParam": {
       "type": "object",
       "properties": {
-        "onlyCount": {
+        "pagination": {
           "type": "boolean"
         },
-        "current": {
+        "countOnly": {
+          "type": "boolean"
+        },
+        "page": {
           "type": "string",
           "format": "int64"
         },
@@ -250,7 +259,7 @@
           "type": "string",
           "format": "int64"
         },
-        "current": {
+        "page": {
           "type": "string",
           "format": "int64"
         },

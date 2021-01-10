@@ -5,6 +5,7 @@ package pkg.proto.rule.v1;
 option go_package = "github.com/myDevicesIoT/protos/pkg/rule/v1;rule";
 
 import "pkg/proto/common/v1/common.proto";
+import "google/protobuf/timestamp.proto";
 
 // GetRuleParam
 message GetRuleParam {
