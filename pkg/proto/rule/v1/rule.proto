@@ -79,6 +79,7 @@ message ListRulesRequest {
 
 message ListRulesResponse {
   Rules rules = 1;
+  
 }
 
 message CreatRuleRequest {

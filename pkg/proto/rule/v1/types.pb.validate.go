@@ -123,7 +123,15 @@ func (m *ListRulesParam) Validate() error {
 
 	// no validation rules for Status
 
-	// no validation rules for Enabled
+	if v, ok := interface{}(m.GetEnabled()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ListRulesParamValidationError{
+				field:  "Enabled",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	// no validation rules for Unit
 
@@ -1056,13 +1064,13 @@ func (m *Rules) Validate() error {
 		return nil
 	}
 
-	for idx, item := range m.GetData() {
+	for idx, item := range m.GetList() {
 		_, _ = idx, item
 
 		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return RulesValidationError{
-					field:  fmt.Sprintf("Data[%v]", idx),
+					field:  fmt.Sprintf("List[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}

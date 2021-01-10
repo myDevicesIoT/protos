@@ -612,7 +612,7 @@
     "v1Rules": {
       "type": "object",
       "properties": {
-        "rules": {
+        "list": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/protorulev1Rule"
