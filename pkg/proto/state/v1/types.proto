@@ -4,33 +4,13 @@ syntax = "proto3";
 package pkg.proto.state.v1;
 option go_package = "github.com/myDevicesIoT/protos/pkg/proto/state/v1;state";
 
-import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "pkg/proto/common/v1/common.proto";
-import "google/protobuf/wrappers.proto";
 
 enum DeviceStatus {
     UNKNOWN_STATUS = 0;
     ONLINE = 1;
     OFFLINE = 2;
-}
-
-// ListDeviceStatesParam for bll inner usage
-message ListDeviceStatesParam {
-    common.v1.PaginationParam pagination = 1;
-    repeated string devices = 2;
-    string event = 3;
-    string units = 4;
-    string format = 5;
-
-    DeviceStatus status = 6;
-    google.protobuf.Int32Value partition = 7;
-    google.protobuf.Int32Value device_type = 8;
-}
-
-// ListDeviceStatesOptions
-message ListDeviceStatesOptions  {
-	repeated common.v1.OrderField OrderFields= 1;
 }
 
 message DeviceState {
@@ -39,7 +19,7 @@ message DeviceState {
     // @inject_tag: faker:"oneof: 1, 0"
     int64 status = 2;
     // @inject_tag: faker:"-"
-    google.protobuf.Struct sensors=3 [json_name = "sensors"];
+    map<string,string> sensors=3 [json_name = "sensors"];
     // @inject_tag: faker:"uuid_hyphenated"
     string correlation_id=4 [json_name="correlation_id"];
     // @inject_tag: faker:"mac_address"
