@@ -16,7 +16,7 @@ message TriggerData {
 	string TriggerType = 1;
 	string TriggersCombination  = 2;
 	repeated Trigger triggers  = 3;
-	Delay delay = 4;
+    Delay delay = 4;
 }
 
 message Action {
@@ -38,6 +38,8 @@ message Trigger {
     string unit = 3;
     string triggers_combination = 4;
     repeated Condition conditions = 5;
+    float TriggerReading = 6;
+    string TriggerUnit = 7;
 }
 
 message RuleLog {
@@ -49,13 +51,13 @@ message RuleLog {
     string thing_id = 6;
     string sensor_id = 7;
     bool triggered = 8;
-    string date_triggered = 9;
+    google.protobuf.Timestamp date_triggered = 9;
     string trigger_reading = 10;
     string trigger_unit = 11;
     TriggerData trigger_data = 12;
     bool acknowledged_required = 13;
     bool acknowledged = 14;
-    string date_acknowledged = 15;
+    google.protobuf.Timestamp ddate_acknowledged = 15;
     repeated Action actions = 16;
     repeated Condition conditions = 17;
 }

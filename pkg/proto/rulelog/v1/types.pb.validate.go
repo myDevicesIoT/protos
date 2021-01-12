@@ -378,6 +378,10 @@ func (m *Trigger) Validate() error {
 
 	}
 
+	// no validation rules for TriggerReading
+
+	// no validation rules for TriggerUnit
+
 	return nil
 }
 
@@ -458,7 +462,15 @@ func (m *RuleLog) Validate() error {
 
 	// no validation rules for Triggered
 
-	// no validation rules for DateTriggered
+	if v, ok := interface{}(m.GetDateTriggered()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RuleLogValidationError{
+				field:  "DateTriggered",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	// no validation rules for TriggerReading
 
@@ -478,7 +490,15 @@ func (m *RuleLog) Validate() error {
 
 	// no validation rules for Acknowledged
 
-	// no validation rules for DateAcknowledged
+	if v, ok := interface{}(m.GetDdateAcknowledged()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RuleLogValidationError{
+				field:  "DdateAcknowledged",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	for idx, item := range m.GetActions() {
 		_, _ = idx, item

@@ -58,6 +58,8 @@ func (m *DeviceState) Validate() error {
 
 	// no validation rules for Type
 
+	// no validation rules for ClientId
+
 	// no validation rules for StatusInterval
 
 	if v, ok := interface{}(m.GetStatusUpdatedAt()).(interface{ Validate() error }); ok {

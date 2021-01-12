@@ -244,6 +244,10 @@
           "format": "int64",
           "title": "@inject_tag: faker:\"oneof: 1, 0\""
         },
+        "clientId": {
+          "type": "string",
+          "title": "@inject_tag: faker:\"uuid_hyphenated\""
+        },
         "status_interval": {
           "type": "string",
           "format": "int64"

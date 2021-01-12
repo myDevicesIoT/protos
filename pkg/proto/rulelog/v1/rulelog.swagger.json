@@ -183,6 +183,13 @@
           "items": {
             "$ref": "#/definitions/protorulelogv1Condition"
           }
+        },
+        "TriggerReading": {
+          "type": "number",
+          "format": "float"
+        },
+        "TriggerUnit": {
+          "type": "string"
         }
       }
     },
@@ -303,7 +310,8 @@
           "type": "boolean"
         },
         "dateTriggered": {
-          "type": "string"
+          "type": "string",
+          "format": "date-time"
         },
         "triggerReading": {
           "type": "string"
@@ -320,8 +328,9 @@
         "acknowledged": {
           "type": "boolean"
         },
-        "dateAcknowledged": {
-          "type": "string"
+        "ddateAcknowledged": {
+          "type": "string",
+          "format": "date-time"
         },
         "actions": {
           "type": "array",

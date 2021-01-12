@@ -28,10 +28,12 @@ message DeviceState {
     string application_id=6 [json_name="application_id"];
     // @inject_tag: faker:"oneof: 1, 0"
     int64 type=7;
-    int64 status_interval=8 [json_name="status_interval"];
-    google.protobuf.Timestamp status_updated_at=9 [json_name="status_updated_at"];
-    google.protobuf.Timestamp created_at = 10 [json_name="created_at"];
-    google.protobuf.Timestamp updated_at = 11 [json_name="updated_at"];
+    // @inject_tag: faker:"uuid_hyphenated"
+    string client_id=8;
+    int64 status_interval=9 [json_name="status_interval"];
+    google.protobuf.Timestamp status_updated_at=10 [json_name="status_updated_at"];
+    google.protobuf.Timestamp created_at = 11 [json_name="created_at"];
+    google.protobuf.Timestamp updated_at = 12 [json_name="updated_at"];
 }
 
 message DeviceStates {
