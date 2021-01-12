@@ -732,14 +732,19 @@ func (m *Trigger) Validate() error {
 
 	// no validation rules for TriggersCombination
 
-	if v, ok := interface{}(m.GetConditions()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return TriggerValidationError{
-				field:  "Conditions",
-				reason: "embedded message failed validation",
-				cause:  err,
+	for idx, item := range m.GetConditions() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return TriggerValidationError{
+					field:  fmt.Sprintf("Conditions[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
 			}
 		}
+
 	}
 
 	return nil

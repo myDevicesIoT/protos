@@ -60,6 +60,28 @@ func (m *ListDeviceStatesParam) Validate() error {
 
 	// no validation rules for Format
 
+	// no validation rules for Status
+
+	if v, ok := interface{}(m.GetPartition()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ListDeviceStatesParamValidationError{
+				field:  "Partition",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetDeviceType()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return ListDeviceStatesParamValidationError{
+				field:  "DeviceType",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	return nil
 }
 

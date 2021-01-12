@@ -78,7 +78,7 @@ message Trigger {
     string channel = 2;
     string unit = 3;
     string triggers_combination = 4;
-    Condition conditions = 5;
+    repeated Condition conditions = 5;
 }
 
 message Overide {

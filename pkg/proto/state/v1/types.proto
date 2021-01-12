@@ -7,6 +7,7 @@ option go_package = "github.com/myDevicesIoT/protos/pkg/proto/state/v1;state";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "pkg/proto/common/v1/common.proto";
+import "google/protobuf/wrappers.proto";
 
 enum DeviceStatus {
     UNKNOWN_STATUS = 0;
@@ -21,6 +22,10 @@ message ListDeviceStatesParam {
     string event = 3;
     string units = 4;
     string format = 5;
+
+    DeviceStatus status = 6;
+    google.protobuf.Int32Value partition = 7;
+    google.protobuf.Int32Value device_type = 8;
 }
 
 // ListDeviceStatesOptions
