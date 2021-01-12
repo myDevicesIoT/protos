@@ -490,10 +490,10 @@ func (m *RuleLog) Validate() error {
 
 	// no validation rules for Acknowledged
 
-	if v, ok := interface{}(m.GetDdateAcknowledged()).(interface{ Validate() error }); ok {
+	if v, ok := interface{}(m.GetDateAcknowledged()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return RuleLogValidationError{
-				field:  "DdateAcknowledged",
+				field:  "DateAcknowledged",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -528,6 +528,26 @@ func (m *RuleLog) Validate() error {
 			}
 		}
 
+	}
+
+	if v, ok := interface{}(m.GetCreatedAt()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RuleLogValidationError{
+				field:  "CreatedAt",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	if v, ok := interface{}(m.GetUpdatedAt()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RuleLogValidationError{
+				field:  "UpdatedAt",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
 	}
 
 	return nil

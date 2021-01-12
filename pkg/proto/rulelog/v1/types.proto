@@ -57,9 +57,12 @@ message RuleLog {
     TriggerData trigger_data = 12;
     bool acknowledged_required = 13;
     bool acknowledged = 14;
-    google.protobuf.Timestamp ddate_acknowledged = 15;
+    google.protobuf.Timestamp date_acknowledged = 15;
     repeated Action actions = 16;
     repeated Condition conditions = 17;
+    repeated string targets = 18;
+    google.protobuf.Timestamp created_at = 19;
+    google.protobuf.Timestamp updated_at = 20;
 }
 
 message RuleLogs {
