@@ -179,7 +179,10 @@
           "type": "string"
         },
         "conditions": {
-          "$ref": "#/definitions/protorulelogv1Condition"
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protorulelogv1Condition"
+          }
         }
       }
     },
