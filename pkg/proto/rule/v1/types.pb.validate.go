@@ -294,6 +294,18 @@ func (m *UpdateRuleParam) Validate() error {
 
 	// no validation rules for Id
 
+	// no validation rules for Status
+
+	if v, ok := interface{}(m.GetEnabled()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return UpdateRuleParamValidationError{
+				field:  "Enabled",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
 	return nil
 }
 
