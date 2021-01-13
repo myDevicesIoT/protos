@@ -9,8 +9,7 @@ package rule
 import (
 	_ "github.com/envoyproxy/protoc-gen-validate/validate"
 	proto "github.com/golang/protobuf/proto"
-	v11 "github.com/myDevicesIoT/protos/pkg/proto/common/v1"
-	v1 "github.com/myDevicesIoT/protos/pkg/rule/v1"
+	v1 "github.com/myDevicesIoT/protos/pkg/proto/common/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -81,7 +80,7 @@ type GetRuleResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Rule *v1.Rule `protobuf:"bytes,1,opt,name=rule,proto3" json:"rule,omitempty"`
+	Rule *Rule `protobuf:"bytes,1,opt,name=rule,proto3" json:"rule,omitempty"`
 }
 
 func (x *GetRuleResponse) Reset() {
@@ -116,7 +115,7 @@ func (*GetRuleResponse) Descriptor() ([]byte, []int) {
 	return file_pkg_proto_rule_v1_rule_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *GetRuleResponse) GetRule() *v1.Rule {
+func (x *GetRuleResponse) GetRule() *Rule {
 	if x != nil {
 		return x.Rule
 	}
@@ -128,10 +127,10 @@ type ListRulesRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Rules         []string             `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty"`
-	ApplicationId string               `protobuf:"bytes,2,opt,name=application_id,json=applicationId,proto3" json:"application_id,omitempty"`
-	AccountId     string               `protobuf:"bytes,3,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
-	Pagination    *v11.PaginationParam `protobuf:"bytes,4,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	Rules         []string            `protobuf:"bytes,1,rep,name=rules,proto3" json:"rules,omitempty"`
+	ApplicationId string              `protobuf:"bytes,2,opt,name=application_id,json=applicationId,proto3" json:"application_id,omitempty"`
+	AccountId     string              `protobuf:"bytes,3,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	Pagination    *v1.PaginationParam `protobuf:"bytes,4,opt,name=pagination,proto3" json:"pagination,omitempty"`
 }
 
 func (x *ListRulesRequest) Reset() {
@@ -187,7 +186,7 @@ func (x *ListRulesRequest) GetAccountId() string {
 	return ""
 }
 
-func (x *ListRulesRequest) GetPagination() *v11.PaginationParam {
+func (x *ListRulesRequest) GetPagination() *v1.PaginationParam {
 	if x != nil {
 		return x.Pagination
 	}
@@ -199,7 +198,7 @@ type ListRulesResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Rules *v1.Rules `protobuf:"bytes,1,opt,name=rules,proto3" json:"rules,omitempty"`
+	Rules *Rules `protobuf:"bytes,1,opt,name=rules,proto3" json:"rules,omitempty"`
 }
 
 func (x *ListRulesResponse) Reset() {
@@ -234,7 +233,7 @@ func (*ListRulesResponse) Descriptor() ([]byte, []int) {
 	return file_pkg_proto_rule_v1_rule_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *ListRulesResponse) GetRules() *v1.Rules {
+func (x *ListRulesResponse) GetRules() *Rules {
 	if x != nil {
 		return x.Rules
 	}
@@ -246,7 +245,7 @@ type CreatRuleRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Rule *v1.Rule `protobuf:"bytes,1,opt,name=rule,proto3" json:"rule,omitempty"`
+	Rule *Rule `protobuf:"bytes,1,opt,name=rule,proto3" json:"rule,omitempty"`
 }
 
 func (x *CreatRuleRequest) Reset() {
@@ -281,7 +280,7 @@ func (*CreatRuleRequest) Descriptor() ([]byte, []int) {
 	return file_pkg_proto_rule_v1_rule_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *CreatRuleRequest) GetRule() *v1.Rule {
+func (x *CreatRuleRequest) GetRule() *Rule {
 	if x != nil {
 		return x.Rule
 	}
@@ -340,7 +339,7 @@ type UpdateRuleRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Rule *v1.Rule `protobuf:"bytes,1,opt,name=rule,proto3" json:"rule,omitempty"`
+	Rule *Rule `protobuf:"bytes,1,opt,name=rule,proto3" json:"rule,omitempty"`
 }
 
 func (x *UpdateRuleRequest) Reset() {
@@ -375,7 +374,7 @@ func (*UpdateRuleRequest) Descriptor() ([]byte, []int) {
 	return file_pkg_proto_rule_v1_rule_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *UpdateRuleRequest) GetRule() *v1.Rule {
+func (x *UpdateRuleRequest) GetRule() *Rule {
 	if x != nil {
 		return x.Rule
 	}
@@ -641,19 +640,19 @@ func file_pkg_proto_rule_v1_rule_proto_rawDescGZIP() []byte {
 
 var file_pkg_proto_rule_v1_rule_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_pkg_proto_rule_v1_rule_proto_goTypes = []interface{}{
-	(*GetRuleRequest)(nil),      // 0: pkg.proto.rule.v1.GetRuleRequest
-	(*GetRuleResponse)(nil),     // 1: pkg.proto.rule.v1.GetRuleResponse
-	(*ListRulesRequest)(nil),    // 2: pkg.proto.rule.v1.ListRulesRequest
-	(*ListRulesResponse)(nil),   // 3: pkg.proto.rule.v1.ListRulesResponse
-	(*CreatRuleRequest)(nil),    // 4: pkg.proto.rule.v1.CreatRuleRequest
-	(*CreatRuleResponse)(nil),   // 5: pkg.proto.rule.v1.CreatRuleResponse
-	(*UpdateRuleRequest)(nil),   // 6: pkg.proto.rule.v1.UpdateRuleRequest
-	(*UpdateRuleResponse)(nil),  // 7: pkg.proto.rule.v1.UpdateRuleResponse
-	(*DeleteRuleRequest)(nil),   // 8: pkg.proto.rule.v1.DeleteRuleRequest
-	(*DeleteRuleResponse)(nil),  // 9: pkg.proto.rule.v1.DeleteRuleResponse
-	(*v1.Rule)(nil),             // 10: pkg.proto.rule.v1.Rule
-	(*v11.PaginationParam)(nil), // 11: pkg.proto.common.v1.PaginationParam
-	(*v1.Rules)(nil),            // 12: pkg.proto.rule.v1.Rules
+	(*GetRuleRequest)(nil),     // 0: pkg.proto.rule.v1.GetRuleRequest
+	(*GetRuleResponse)(nil),    // 1: pkg.proto.rule.v1.GetRuleResponse
+	(*ListRulesRequest)(nil),   // 2: pkg.proto.rule.v1.ListRulesRequest
+	(*ListRulesResponse)(nil),  // 3: pkg.proto.rule.v1.ListRulesResponse
+	(*CreatRuleRequest)(nil),   // 4: pkg.proto.rule.v1.CreatRuleRequest
+	(*CreatRuleResponse)(nil),  // 5: pkg.proto.rule.v1.CreatRuleResponse
+	(*UpdateRuleRequest)(nil),  // 6: pkg.proto.rule.v1.UpdateRuleRequest
+	(*UpdateRuleResponse)(nil), // 7: pkg.proto.rule.v1.UpdateRuleResponse
+	(*DeleteRuleRequest)(nil),  // 8: pkg.proto.rule.v1.DeleteRuleRequest
+	(*DeleteRuleResponse)(nil), // 9: pkg.proto.rule.v1.DeleteRuleResponse
+	(*Rule)(nil),               // 10: pkg.proto.rule.v1.Rule
+	(*v1.PaginationParam)(nil), // 11: pkg.proto.common.v1.PaginationParam
+	(*Rules)(nil),              // 12: pkg.proto.rule.v1.Rules
 }
 var file_pkg_proto_rule_v1_rule_proto_depIdxs = []int32{
 	10, // 0: pkg.proto.rule.v1.GetRuleResponse.rule:type_name -> pkg.proto.rule.v1.Rule
@@ -683,6 +682,7 @@ func file_pkg_proto_rule_v1_rule_proto_init() {
 	if File_pkg_proto_rule_v1_rule_proto != nil {
 		return
 	}
+	file_pkg_proto_rule_v1_types_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_pkg_proto_rule_v1_rule_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetRuleRequest); i {

@@ -9,8 +9,7 @@ package rulelog
 import (
 	_ "github.com/envoyproxy/protoc-gen-validate/validate"
 	proto "github.com/golang/protobuf/proto"
-	v11 "github.com/myDevicesIoT/protos/pkg/proto/common/v1"
-	v1 "github.com/myDevicesIoT/protos/pkg/rulelog/v1"
+	v1 "github.com/myDevicesIoT/protos/pkg/proto/common/v1"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -81,7 +80,7 @@ type GetRuleLogResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Log *v1.RuleLog `protobuf:"bytes,1,opt,name=log,proto3" json:"log,omitempty"`
+	Log *RuleLog `protobuf:"bytes,1,opt,name=log,proto3" json:"log,omitempty"`
 }
 
 func (x *GetRuleLogResponse) Reset() {
@@ -116,7 +115,7 @@ func (*GetRuleLogResponse) Descriptor() ([]byte, []int) {
 	return file_pkg_proto_rulelog_v1_rulelog_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *GetRuleLogResponse) GetLog() *v1.RuleLog {
+func (x *GetRuleLogResponse) GetLog() *RuleLog {
 	if x != nil {
 		return x.Log
 	}
@@ -128,10 +127,10 @@ type ListRuleLogsRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	RuleId        string               `protobuf:"bytes,1,opt,name=rule_id,json=ruleId,proto3" json:"rule_id,omitempty"`
-	ApplicationId string               `protobuf:"bytes,2,opt,name=application_id,json=applicationId,proto3" json:"application_id,omitempty"`
-	AccountId     string               `protobuf:"bytes,3,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
-	Pagination    *v11.PaginationParam `protobuf:"bytes,4,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	RuleId        string              `protobuf:"bytes,1,opt,name=rule_id,json=ruleId,proto3" json:"rule_id,omitempty"`
+	ApplicationId string              `protobuf:"bytes,2,opt,name=application_id,json=applicationId,proto3" json:"application_id,omitempty"`
+	AccountId     string              `protobuf:"bytes,3,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
+	Pagination    *v1.PaginationParam `protobuf:"bytes,4,opt,name=pagination,proto3" json:"pagination,omitempty"`
 }
 
 func (x *ListRuleLogsRequest) Reset() {
@@ -187,7 +186,7 @@ func (x *ListRuleLogsRequest) GetAccountId() string {
 	return ""
 }
 
-func (x *ListRuleLogsRequest) GetPagination() *v11.PaginationParam {
+func (x *ListRuleLogsRequest) GetPagination() *v1.PaginationParam {
 	if x != nil {
 		return x.Pagination
 	}
@@ -199,7 +198,7 @@ type ListRuleLogsResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Logs *v1.RuleLogs `protobuf:"bytes,1,opt,name=logs,proto3" json:"logs,omitempty"`
+	Logs *RuleLogs `protobuf:"bytes,1,opt,name=logs,proto3" json:"logs,omitempty"`
 }
 
 func (x *ListRuleLogsResponse) Reset() {
@@ -234,7 +233,7 @@ func (*ListRuleLogsResponse) Descriptor() ([]byte, []int) {
 	return file_pkg_proto_rulelog_v1_rulelog_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *ListRuleLogsResponse) GetLogs() *v1.RuleLogs {
+func (x *ListRuleLogsResponse) GetLogs() *RuleLogs {
 	if x != nil {
 		return x.Logs
 	}
@@ -321,9 +320,9 @@ var file_pkg_proto_rulelog_v1_rulelog_proto_goTypes = []interface{}{
 	(*GetRuleLogResponse)(nil),   // 1: pkg.proto.rulelog.v1.GetRuleLogResponse
 	(*ListRuleLogsRequest)(nil),  // 2: pkg.proto.rulelog.v1.ListRuleLogsRequest
 	(*ListRuleLogsResponse)(nil), // 3: pkg.proto.rulelog.v1.ListRuleLogsResponse
-	(*v1.RuleLog)(nil),           // 4: pkg.proto.rulelog.v1.RuleLog
-	(*v11.PaginationParam)(nil),  // 5: pkg.proto.common.v1.PaginationParam
-	(*v1.RuleLogs)(nil),          // 6: pkg.proto.rulelog.v1.RuleLogs
+	(*RuleLog)(nil),              // 4: pkg.proto.rulelog.v1.RuleLog
+	(*v1.PaginationParam)(nil),   // 5: pkg.proto.common.v1.PaginationParam
+	(*RuleLogs)(nil),             // 6: pkg.proto.rulelog.v1.RuleLogs
 }
 var file_pkg_proto_rulelog_v1_rulelog_proto_depIdxs = []int32{
 	4, // 0: pkg.proto.rulelog.v1.GetRuleLogResponse.log:type_name -> pkg.proto.rulelog.v1.RuleLog
@@ -345,6 +344,7 @@ func file_pkg_proto_rulelog_v1_rulelog_proto_init() {
 	if File_pkg_proto_rulelog_v1_rulelog_proto != nil {
 		return
 	}
+	file_pkg_proto_rulelog_v1_types_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_pkg_proto_rulelog_v1_rulelog_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GetRuleLogRequest); i {
