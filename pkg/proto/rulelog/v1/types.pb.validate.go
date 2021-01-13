@@ -638,13 +638,13 @@ func (m *RuleLogs) Validate() error {
 		return nil
 	}
 
-	for idx, item := range m.GetData() {
+	for idx, item := range m.GetList() {
 		_, _ = idx, item
 
 		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
 				return RuleLogsValidationError{
-					field:  fmt.Sprintf("Data[%v]", idx),
+					field:  fmt.Sprintf("List[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
 				}

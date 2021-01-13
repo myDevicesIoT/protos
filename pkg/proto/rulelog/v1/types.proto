@@ -67,6 +67,6 @@ message RuleLog {
 }
 
 message RuleLogs {
-    repeated RuleLog data = 1 [json_name="logs"];
+    repeated RuleLog list = 1 [json_name="logs"];
     common.v1.PaginationResult pagination = 2;
 }
