@@ -1,5 +1,0 @@
-syntax = "proto3";
-
-package pkg.proto.notification.v1;
-
-option go_package = "github.com/myDevicesIoT/protos/pkg/proto/notification/v1;notification";
