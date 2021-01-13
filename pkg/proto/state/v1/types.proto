@@ -37,7 +37,7 @@ message DeviceState {
 }
 
 message DeviceStates {
-    repeated DeviceState data = 1 [json_name="devices"];
+    repeated DeviceState list = 1 [json_name="devices"];
     common.v1.PaginationResult pagination = 2;
 }
 
