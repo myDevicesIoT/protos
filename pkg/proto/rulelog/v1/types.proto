@@ -5,6 +5,7 @@ package pkg.proto.rulelog.v1;
 option go_package = "github.com/myDevicesIoT/protos/pkg/rulelog/v1;rulelog";
 
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 import "pkg/proto/common/v1/common.proto";
 
 message Delay {
@@ -50,13 +51,13 @@ message RuleLog {
     string status = 5;
     string thing_id = 6;
     string sensor_id = 7;
-    bool triggered = 8;
+    google.protobuf.BoolValue triggered = 8;
     google.protobuf.Timestamp date_triggered = 9;
     string trigger_reading = 10;
     string trigger_unit = 11;
     TriggerData trigger_data = 12;
-    bool acknowledged_required = 13;
-    bool acknowledged = 14;
+    google.protobuf.BoolValue acknowledged_required = 13;
+    google.protobuf.BoolValue acknowledged = 14;
     google.protobuf.Timestamp date_acknowledged = 15;
     repeated Action actions = 16;
     repeated Condition conditions = 17;

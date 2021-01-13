@@ -460,7 +460,15 @@ func (m *RuleLog) Validate() error {
 
 	// no validation rules for SensorId
 
-	// no validation rules for Triggered
+	if v, ok := interface{}(m.GetTriggered()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RuleLogValidationError{
+				field:  "Triggered",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	if v, ok := interface{}(m.GetDateTriggered()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
@@ -486,9 +494,25 @@ func (m *RuleLog) Validate() error {
 		}
 	}
 
-	// no validation rules for AcknowledgedRequired
+	if v, ok := interface{}(m.GetAcknowledgedRequired()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RuleLogValidationError{
+				field:  "AcknowledgedRequired",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
-	// no validation rules for Acknowledged
+	if v, ok := interface{}(m.GetAcknowledged()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RuleLogValidationError{
+				field:  "Acknowledged",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	if v, ok := interface{}(m.GetDateAcknowledged()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
