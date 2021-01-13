@@ -5,6 +5,8 @@ package pkg.proto.rule.v1;
 option go_package = "github.com/myDevicesIoT/protos/pkg/rule/v1;rule";
 
 import "pkg/proto/common/v1/common.proto";
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
 
 message Condition {
     string operator = 1;
@@ -45,7 +47,7 @@ message Overide {
     string start = 1;
     string end = 2;
     int64 delay = 3;
-    string starting_at = 4;
+    google.protobuf.Timestamp starting_at = 4;
     int64 timeout = 5;
     int64 count = 6;
     repeated Trigger triggers = 7;
@@ -55,26 +57,26 @@ message Overide {
 
 message Rule {
     string title = 1;
-    bool auto_acknowledge = 2;
-    bool enabled = 3;
-    bool triggered = 4;
-    string last_triggered = 5;
+    google.protobuf.BoolValue auto_acknowledge = 2;
+    google.protobuf.BoolValue enabled = 3;
+    google.protobuf.BoolValue triggered = 4;
+    google.protobuf.Timestamp last_triggered = 5;
     string last_triggered_log_id = 6;
     int64 total_triggered = 7;
     string status = 8;
     string account_id = 9;
     string application_id = 10;
-    string updated_at = 11;
-    string created_at = 12;
+    google.protobuf.Timestamp updated_at = 11;
+    google.protobuf.Timestamp created_at = 12;
     repeated Notification notifications = 13;
     repeated Webhook http_push = 14;
     repeated Action actions = 15;
     string triggers_combination = 16;
     repeated Trigger triggers = 17;
     string version = 18;
-    bool trigger_on_condition_exit = 19;
+    google.protobuf.BoolValue trigger_on_condition_exit = 19;
     int64 delay = 20;
-    string starting_at = 21;
+    google.protobuf.Timestamp starting_at = 21;
     repeated Overide overrides = 22;
     string id = 23;
 }

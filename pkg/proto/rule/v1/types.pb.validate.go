@@ -423,7 +423,15 @@ func (m *Overide) Validate() error {
 
 	// no validation rules for Delay
 
-	// no validation rules for StartingAt
+	if v, ok := interface{}(m.GetStartingAt()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return OverideValidationError{
+				field:  "StartingAt",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	// no validation rules for Timeout
 
@@ -514,13 +522,45 @@ func (m *Rule) Validate() error {
 
 	// no validation rules for Title
 
-	// no validation rules for AutoAcknowledge
+	if v, ok := interface{}(m.GetAutoAcknowledge()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RuleValidationError{
+				field:  "AutoAcknowledge",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
-	// no validation rules for Enabled
+	if v, ok := interface{}(m.GetEnabled()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RuleValidationError{
+				field:  "Enabled",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
-	// no validation rules for Triggered
+	if v, ok := interface{}(m.GetTriggered()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RuleValidationError{
+				field:  "Triggered",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
-	// no validation rules for LastTriggered
+	if v, ok := interface{}(m.GetLastTriggered()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RuleValidationError{
+				field:  "LastTriggered",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	// no validation rules for LastTriggeredLogId
 
@@ -532,9 +572,25 @@ func (m *Rule) Validate() error {
 
 	// no validation rules for ApplicationId
 
-	// no validation rules for UpdatedAt
+	if v, ok := interface{}(m.GetUpdatedAt()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RuleValidationError{
+				field:  "UpdatedAt",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
-	// no validation rules for CreatedAt
+	if v, ok := interface{}(m.GetCreatedAt()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RuleValidationError{
+				field:  "CreatedAt",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	for idx, item := range m.GetNotifications() {
 		_, _ = idx, item
@@ -600,11 +656,27 @@ func (m *Rule) Validate() error {
 
 	// no validation rules for Version
 
-	// no validation rules for TriggerOnConditionExit
+	if v, ok := interface{}(m.GetTriggerOnConditionExit()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RuleValidationError{
+				field:  "TriggerOnConditionExit",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	// no validation rules for Delay
 
-	// no validation rules for StartingAt
+	if v, ok := interface{}(m.GetStartingAt()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return RuleValidationError{
+				field:  "StartingAt",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
 
 	for idx, item := range m.GetOverrides() {
 		_, _ = idx, item

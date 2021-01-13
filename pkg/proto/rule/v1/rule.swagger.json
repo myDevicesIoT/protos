@@ -349,7 +349,8 @@
           "type": "boolean"
         },
         "lastTriggered": {
-          "type": "string"
+          "type": "string",
+          "format": "date-time"
         },
         "lastTriggeredLogId": {
           "type": "string"
@@ -368,10 +369,12 @@
           "type": "string"
         },
         "updatedAt": {
-          "type": "string"
+          "type": "string",
+          "format": "date-time"
         },
         "createdAt": {
-          "type": "string"
+          "type": "string",
+          "format": "date-time"
         },
         "notifications": {
           "type": "array",
@@ -411,7 +414,8 @@
           "format": "int64"
         },
         "startingAt": {
-          "type": "string"
+          "type": "string",
+          "format": "date-time"
         },
         "overrides": {
           "type": "array",
@@ -546,7 +550,8 @@
           "format": "int64"
         },
         "startingAt": {
-          "type": "string"
+          "type": "string",
+          "format": "date-time"
         },
         "timeout": {
           "type": "string",
