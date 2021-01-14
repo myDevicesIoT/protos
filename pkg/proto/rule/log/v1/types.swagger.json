@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "pkg/proto/rulelog/v1/types.proto",
+    "title": "pkg/proto/rule/log/v1/types.proto",
     "version": "version not set"
   },
   "consumes": [

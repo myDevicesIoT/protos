@@ -1,7 +1,7 @@
 syntax = "proto3";
 
-package pkg.proto.rulelog.v1;
-option go_package = "github.com/myDevicesIoT/protos/pkg/proto/rulelog/v1;rulelog";
+package pkg.proto.rule.log.v1;
+option go_package = "github.com/myDevicesIoT/protos/pkg/proto/rule/log/v1;log";
 
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
