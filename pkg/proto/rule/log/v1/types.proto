@@ -28,7 +28,7 @@ message Action {
 
 message Condition {
     string operator = 1;
-    string value = 2;
+    double value = 2;
     string id = 3;
 }
 
