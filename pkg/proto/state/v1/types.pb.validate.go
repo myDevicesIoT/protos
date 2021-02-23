@@ -36,10 +36,9 @@ var (
 // define the regex for a UUID once up-front
 var _types_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
 
-// Validate checks the field values on DeviceState with the rules defined in
-// the proto definition for this message. If any rules are violated, an error
-// is returned.
-func (m *DeviceState) Validate() error {
+// Validate checks the field values on State with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *State) Validate() error {
 	if m == nil {
 		return nil
 	}
@@ -64,7 +63,7 @@ func (m *DeviceState) Validate() error {
 
 	if v, ok := interface{}(m.GetStatusUpdatedAt()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return DeviceStateValidationError{
+			return StateValidationError{
 				field:  "StatusUpdatedAt",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -74,7 +73,7 @@ func (m *DeviceState) Validate() error {
 
 	if v, ok := interface{}(m.GetCreatedAt()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return DeviceStateValidationError{
+			return StateValidationError{
 				field:  "CreatedAt",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -84,7 +83,7 @@ func (m *DeviceState) Validate() error {
 
 	if v, ok := interface{}(m.GetUpdatedAt()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return DeviceStateValidationError{
+			return StateValidationError{
 				field:  "UpdatedAt",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -95,9 +94,9 @@ func (m *DeviceState) Validate() error {
 	return nil
 }
 
-// DeviceStateValidationError is the validation error returned by
-// DeviceState.Validate if the designated constraints aren't met.
-type DeviceStateValidationError struct {
+// StateValidationError is the validation error returned by State.Validate if
+// the designated constraints aren't met.
+type StateValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -105,22 +104,22 @@ type DeviceStateValidationError struct {
 }
 
 // Field function returns field value.
-func (e DeviceStateValidationError) Field() string { return e.field }
+func (e StateValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e DeviceStateValidationError) Reason() string { return e.reason }
+func (e StateValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e DeviceStateValidationError) Cause() error { return e.cause }
+func (e StateValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e DeviceStateValidationError) Key() bool { return e.key }
+func (e StateValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e DeviceStateValidationError) ErrorName() string { return "DeviceStateValidationError" }
+func (e StateValidationError) ErrorName() string { return "StateValidationError" }
 
 // Error satisfies the builtin error interface
-func (e DeviceStateValidationError) Error() string {
+func (e StateValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -132,14 +131,14 @@ func (e DeviceStateValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sDeviceState.%s: %s%s",
+		"invalid %sState.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = DeviceStateValidationError{}
+var _ error = StateValidationError{}
 
 var _ interface {
 	Field() string
@@ -147,12 +146,11 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = DeviceStateValidationError{}
+} = StateValidationError{}
 
-// Validate checks the field values on DeviceStates with the rules defined in
-// the proto definition for this message. If any rules are violated, an error
-// is returned.
-func (m *DeviceStates) Validate() error {
+// Validate checks the field values on States with the rules defined in the
+// proto definition for this message. If any rules are violated, an error is returned.
+func (m *States) Validate() error {
 	if m == nil {
 		return nil
 	}
@@ -162,7 +160,7 @@ func (m *DeviceStates) Validate() error {
 
 		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
 			if err := v.Validate(); err != nil {
-				return DeviceStatesValidationError{
+				return StatesValidationError{
 					field:  fmt.Sprintf("List[%v]", idx),
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -174,7 +172,7 @@ func (m *DeviceStates) Validate() error {
 
 	if v, ok := interface{}(m.GetPagination()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return DeviceStatesValidationError{
+			return StatesValidationError{
 				field:  "Pagination",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -185,9 +183,9 @@ func (m *DeviceStates) Validate() error {
 	return nil
 }
 
-// DeviceStatesValidationError is the validation error returned by
-// DeviceStates.Validate if the designated constraints aren't met.
-type DeviceStatesValidationError struct {
+// StatesValidationError is the validation error returned by States.Validate if
+// the designated constraints aren't met.
+type StatesValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -195,22 +193,22 @@ type DeviceStatesValidationError struct {
 }
 
 // Field function returns field value.
-func (e DeviceStatesValidationError) Field() string { return e.field }
+func (e StatesValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e DeviceStatesValidationError) Reason() string { return e.reason }
+func (e StatesValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e DeviceStatesValidationError) Cause() error { return e.cause }
+func (e StatesValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e DeviceStatesValidationError) Key() bool { return e.key }
+func (e StatesValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e DeviceStatesValidationError) ErrorName() string { return "DeviceStatesValidationError" }
+func (e StatesValidationError) ErrorName() string { return "StatesValidationError" }
 
 // Error satisfies the builtin error interface
-func (e DeviceStatesValidationError) Error() string {
+func (e StatesValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -222,14 +220,14 @@ func (e DeviceStatesValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sDeviceStates.%s: %s%s",
+		"invalid %sStates.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = DeviceStatesValidationError{}
+var _ error = StatesValidationError{}
 
 var _ interface {
 	Field() string
@@ -237,4 +235,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = DeviceStatesValidationError{}
+} = StatesValidationError{}

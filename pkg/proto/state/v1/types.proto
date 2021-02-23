@@ -10,13 +10,15 @@ import "pkg/proto/common/v1/common.proto";
 enum DeviceStatus {
     UNKNOWN_STATUS = 0;
     ONLINE = 1;
-    OFFLINE = 2;
+    WAITING = 2;
+    INACTIVITY = 3;
+    OFFLINE = 4;
 }
 
-message DeviceState {
+message State {
     // @inject_tag: faker:"uuid_hyphenated"
     string device_id=1 [json_name="device_id"];
-    // @inject_tag: faker:"oneof: 1, 0"
+    // @inject_tag: faker:"oneof: 1, 2, 3, 4"
     int64 status = 2;
     // @inject_tag: faker:"-"
     map<string,string> sensors=3 [json_name = "sensors"];
@@ -36,8 +38,8 @@ message DeviceState {
     google.protobuf.Timestamp updated_at = 12 [json_name="updated_at"];
 }
 
-message DeviceStates {
-    repeated DeviceState list = 1 [json_name="devices"];
+message States {
+    repeated State list = 1 [json_name="states"];
     common.v1.PaginationResult pagination = 2;
 }
 

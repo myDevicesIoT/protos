@@ -19,7 +19,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/v1DeviceStates"
+              "$ref": "#/definitions/v1States"
             }
           },
           "default": {
@@ -141,7 +141,7 @@
           "200": {
             "description": "",
             "schema": {
-              "$ref": "#/definitions/v1DeviceState"
+              "$ref": "#/definitions/v1State"
             }
           },
           "default": {
@@ -208,7 +208,65 @@
         }
       }
     },
-    "v1DeviceState": {
+    "v1GetDeviceStateResponse": {
+      "type": "object",
+      "properties": {
+        "device": {
+          "$ref": "#/definitions/v1State"
+        }
+      }
+    },
+    "v1ListDeviceStatesResponse": {
+      "type": "object",
+      "properties": {
+        "devices": {
+          "$ref": "#/definitions/v1States"
+        }
+      }
+    },
+    "v1PaginationParam": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "type": "boolean"
+        },
+        "countOnly": {
+          "type": "boolean"
+        },
+        "page": {
+          "type": "string",
+          "format": "int64"
+        },
+        "pageSize": {
+          "type": "string",
+          "format": "int64"
+        },
+        "cursor": {
+          "type": "string"
+        }
+      }
+    },
+    "v1PaginationResult": {
+      "type": "object",
+      "properties": {
+        "total": {
+          "type": "string",
+          "format": "int64"
+        },
+        "page": {
+          "type": "string",
+          "format": "int64"
+        },
+        "page_size": {
+          "type": "string",
+          "format": "int64"
+        },
+        "cursor": {
+          "type": "string"
+        }
+      }
+    },
+    "v1State": {
       "type": "object",
       "properties": {
         "device_id": {
@@ -218,7 +276,7 @@
         "status": {
           "type": "string",
           "format": "int64",
-          "title": "@inject_tag: faker:\"oneof: 1, 0\""
+          "title": "@inject_tag: faker:\"oneof: 1, 2, 3, 4\""
         },
         "sensors": {
           "type": "object",
@@ -266,75 +324,17 @@
         }
       }
     },
-    "v1DeviceStates": {
+    "v1States": {
       "type": "object",
       "properties": {
-        "devices": {
+        "states": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/v1DeviceState"
+            "$ref": "#/definitions/v1State"
           }
         },
         "pagination": {
           "$ref": "#/definitions/v1PaginationResult"
-        }
-      }
-    },
-    "v1GetDeviceStateResponse": {
-      "type": "object",
-      "properties": {
-        "device": {
-          "$ref": "#/definitions/v1DeviceState"
-        }
-      }
-    },
-    "v1ListDeviceStatesResponse": {
-      "type": "object",
-      "properties": {
-        "devices": {
-          "$ref": "#/definitions/v1DeviceStates"
-        }
-      }
-    },
-    "v1PaginationParam": {
-      "type": "object",
-      "properties": {
-        "pagination": {
-          "type": "boolean"
-        },
-        "countOnly": {
-          "type": "boolean"
-        },
-        "page": {
-          "type": "string",
-          "format": "int64"
-        },
-        "pageSize": {
-          "type": "string",
-          "format": "int64"
-        },
-        "cursor": {
-          "type": "string"
-        }
-      }
-    },
-    "v1PaginationResult": {
-      "type": "object",
-      "properties": {
-        "total": {
-          "type": "string",
-          "format": "int64"
-        },
-        "page": {
-          "type": "string",
-          "format": "int64"
-        },
-        "page_size": {
-          "type": "string",
-          "format": "int64"
-        },
-        "cursor": {
-          "type": "string"
         }
       }
     }
