@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package pkg.proto.gateway.v2;
+
+option go_package = "github.com/myDevicesIoT/protos/pkg/proto/gateway/v2;gateway";
+
+// Payload represents sensor data
+message Payload {
+  string type = 1;          // e.g., "digital"
+  string unit = 2;          // e.g., "ping"
+  int64 value = 3;          // sensor value
+  string channel = 4;       // channel identifier
+  string sensor_id = 5;     // sensor identifier
+  string correlation_id = 6; // correlation ID for tracking
+}
+
+// GatewayMetrics contains gateway packet statistics
+message GatewayMetrics {
+  uint32 rx_packets_received = 1;      // Total radio packets received
+  uint32 rx_packets_received_ok = 2;   // Packets received with valid PHY CRC
+  uint32 tx_packets_received = 3;      // Downlink packets received for transmission
+  uint32 tx_packets_emitted = 4;       // Downlink packets emitted
+  map<uint32, uint32> tx_packets_per_frequency = 5; // Tx packets per frequency
+  map<uint32, uint32> rx_packets_per_frequency = 6; // Rx packets per frequency
+  map<string, uint32> tx_packets_per_status = 7;    // Tx packets per status
+}
+
+// GatewayPing is the main message sent to RabbitMQ
+message GatewayPing {
+  string application_id = 1;   // Application identifier
+  string user_id = 2;          // User identifier
+  string client_id = 3;        // Client identifier
+  string hardware_id = 4;      // Hardware identifier
+  string device_id = 5;        // Device identifier
+  repeated Payload payload = 6; // Sensor payloads
+  string device_type_id = 7;   // Device type identifier
+  string correlation_id = 8;   // Correlation ID for tracking
+  int64 timestamp = 9;         // Unix timestamp in milliseconds
+  string version = 10;         // API version
+  string resource = 11;        // Resource path
+  string topic = 12;           // MQTT topic
+  map<string, string> metadata = 13; // Additional metadata
+  GatewayMetrics metrics = 14; // Gateway statistics
+}
+
+// AMQPMessage wraps the gateway ping with routing information
+message AMQPMessage {
+  string exchange = 1;     // AMQP exchange name
+  string routing_key = 2;  // AMQP routing key
+  string content_type = 3; // Content type (e.g., "application/x-protobuf")
+  bytes body = 4;          // Serialized GatewayPing message
+  string message_type = 5; // Message type for routing (e.g., "arcangelus/gateway-keepalive")
+}
+
+// GatewayExecResult represents command execution results
+message GatewayExecResult {
+  string gateway_id = 1;    // Gateway identifier
+  string exec_id = 2;       // Execution identifier
+  string stdout = 3;        // Standard output
+  string stderr = 4;        // Standard error
+  int32 exit_code = 5;      // Exit code
+  int64 timestamp = 6;      // Unix timestamp in milliseconds
+  string correlation_id = 7; // Correlation ID for tracking
+}

@@ -8,7 +8,7 @@ PROTO_FILES ?= $(shell find $(PWD) -type f -path '*.proto' | grep -v "vendor")
 #PROTO_FILES ?= $(PWD)/api/application.proto
 PROTO_PB_FILES ?= $(shell find $(PWD) -type f -path '*.pb.go' | grep -v "vendor")
 
-PROTOC := ${GOPATH}/bin/protoc
+PROTOC := $(shell which protoc)
 PROTOC_INJECT_TAG := ${GOPATH}/bin/protoc-go-inject-tag
 PROTOS_DEST = $(PWD)
 PROTOC_FLAGS ?= \

@@ -1,6 +1,6 @@
 module github.com/myDevicesIoT/protos
 
-go 1.14
+go 1.21
 
 require (
 	github.com/bmeg/grip v0.0.0-20200503195531-e86b5fc9b9b0
