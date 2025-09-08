@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package pkg.proto.gateway.v2;
+
+option go_package = "github.com/myDevicesIoT/protos/pkg/proto/gateway/v2;gateway";
+
+message TimeRange {
+  string start_time = 1; // RFC3339 or relative like "now-6h"
+  string end_time = 2;   // RFC3339 or "now"
+  string timezone = 3;   // e.g. "UTC", "America/Los_Angeles"
+}
+
+message Filter {
+  string device_id = 1;               // optional
+  string device_type_id = 2;          // optional
+  string user_id = 3;                 // optional
+  string application_id = 4;          // optional
+  repeated string hardware_ids = 5;   // optional (gateway hardware_id)
+}
+
+message BucketSpec { string fixed_interval = 1; } // e.g. "5m"
+
+message SeriesPoint { string ts = 1; double value = 2; }
+message BucketSeries { string key = 1; repeated SeriesPoint points = 2; }
+
+message GetPingHistogramRequest {
+  Filter filter = 1;
+  TimeRange range = 2;
+  BucketSpec bucket = 3;
+  int32 max_buckets = 4; // default 1440
+  int32 top_n = 5;       // split by top gateways
+}
+message GetPingHistogramResponse { repeated BucketSeries series = 1; }
+
+message HistogramBucket { double key = 1; int64 count = 2; }
+
+message GetGatewayStatsRequest { Filter filter = 1; TimeRange range = 2; int32 top_n = 3; }
+message GatewayStats {
+  string hardware_id = 1;
+  uint64 unique_devices = 2;
+  uint64 rx_packets_received = 3;
+  uint64 rx_packets_received_ok = 4;
+  double success_ratio = 5; // ok/received
+}
+message GetGatewayStatsResponse { repeated GatewayStats gateways = 1; }
+
+service GatewayAnalytics {
+  rpc GetPingHistogram(GetPingHistogramRequest) returns (GetPingHistogramResponse);
+  rpc GetGatewayStats(GetGatewayStatsRequest) returns (GetGatewayStatsResponse);
+}
+
