@@ -1,0 +1,183 @@
+syntax = "proto3";
+
+package pkg.proto.telemetry.v1;
+
+option go_package = "github.com/myDevicesIoT/protos/pkg/proto/telemetry/v1;telemetry";
+
+// ==================== Common Types ====================
+
+message TimeRange {
+  string start_time = 1; // RFC3339 or relative like "now-6h"
+  string end_time = 2;   // RFC3339 or "now"
+  string timezone = 3;   // e.g. "UTC", "America/Los_Angeles"
+}
+
+message TelemetryFilter {
+  string user_id = 1;
+  string application_id = 2;
+  string device_id = 3;
+  string device_type_id = 4;
+  repeated string sensor_ids = 5;
+  repeated string channels = 6;
+  repeated string event_types = 7;
+  repeated string data_types = 8;
+  string correlation_id = 9;
+  ValueFilter value_filter = 10;
+  GeoFilter geo_filter = 11;
+}
+
+message ValueFilter {
+  optional double min = 1;
+  optional double max = 2;
+}
+
+message GeoFilter {
+  double top_left_lat = 1;
+  double top_left_lon = 2;
+  double bottom_right_lat = 3;
+  double bottom_right_lon = 4;
+}
+
+message Pagination {
+  int32 page_size = 1;   // default 50, max 1000
+  string page_token = 2; // cursor for next page
+}
+
+message SortOrder {
+  string field = 1;    // default "@timestamp"
+  bool descending = 2; // default true
+}
+
+message BucketSpec { string fixed_interval = 1; } // e.g. "5m", "1h", "1d"
+
+// ==================== TelemetryEvent ====================
+
+message TelemetryEvent {
+  string id = 1;
+  string timestamp = 2;
+  string application_id = 3;
+  string user_id = 4;
+  string device_id = 5;
+  string device_type_id = 6;
+  string sensor_id = 7;
+  string channel = 8;
+  string correlation_id = 9;
+  string event = 10;
+  string type = 11;
+  optional double value = 12;
+  string value_text = 13;
+  optional double geo_lat = 14;
+  optional double geo_lon = 15;
+  string unit = 16;
+  string name = 17;
+  string data_type = 18;
+  string remark = 19;
+  string source_id = 20;
+  int64 created_at = 21;
+  int64 updated_at = 22;
+}
+
+// ==================== SearchEvents ====================
+
+message SearchEventsRequest {
+  TimeRange range = 1;
+  TelemetryFilter filter = 2;
+  Pagination pagination = 3;
+  SortOrder sort = 4;
+}
+
+message SearchEventsResponse {
+  repeated TelemetryEvent events = 1;
+  int64 total_count = 2;
+  string next_page_token = 3;
+}
+
+// ==================== GetTimeHistogram ====================
+
+message GetTimeHistogramRequest {
+  TimeRange range = 1;
+  BucketSpec bucket = 2;
+  TelemetryFilter filter = 3;
+  string group_by = 4;    // "device_id", "sensor_id", "channel", "event"
+  int32 top_n = 5;        // default 10, max 100
+  int32 max_buckets = 6;  // default 1440
+}
+
+message TimeSeriesPoint {
+  string ts = 1;
+  int64 count = 2;
+  optional double avg_value = 3;
+}
+
+message TimeSeries {
+  string key = 1;
+  repeated TimeSeriesPoint points = 2;
+}
+
+message GetTimeHistogramResponse {
+  repeated TimeSeries series = 1;
+  int64 total_events = 2;
+}
+
+// ==================== GetAggregations ====================
+
+enum AggregationType {
+  AGGREGATION_TYPE_UNSPECIFIED = 0;
+  AGGREGATION_TYPE_COUNT = 1;
+  AGGREGATION_TYPE_AVG = 2;
+  AGGREGATION_TYPE_MIN = 3;
+  AGGREGATION_TYPE_MAX = 4;
+  AGGREGATION_TYPE_SUM = 5;
+  AGGREGATION_TYPE_CARDINALITY = 6;
+}
+
+message GetAggregationsRequest {
+  TimeRange range = 1;
+  TelemetryFilter filter = 2;
+  repeated string group_by = 3; // "device_id", "sensor_id", "channel", "event", "type"
+  repeated AggregationType aggregations = 4;
+  int32 top_n = 5; // default 20, max 1000
+}
+
+message AggregationBucket {
+  map<string, string> dimensions = 1;
+  int64 count = 2;
+  optional double avg_value = 3;
+  optional double min_value = 4;
+  optional double max_value = 5;
+  optional double sum_value = 6;
+  optional int64 unique_count = 7;
+}
+
+message GetAggregationsResponse {
+  repeated AggregationBucket buckets = 1;
+  int64 total_buckets = 2;
+  int64 other_buckets = 3;
+}
+
+// ==================== GetLatestEvents (LLM-friendly) ====================
+
+message GetLatestEventsRequest {
+  TelemetryFilter filter = 1;
+  int32 limit = 2;              // default 10, max 100
+  string time_description = 3;  // "last hour", "today", "yesterday"
+  TimeRange range = 4;          // fallback if time_description not provided
+  bool include_summary = 5;
+}
+
+message GetLatestEventsResponse {
+  repeated TelemetryEvent events = 1;
+  int64 total_in_range = 2;
+  string summary = 3;       // "Found 156 events from 3 devices..."
+  string parsed_start = 4;
+  string parsed_end = 5;
+}
+
+// ==================== Service ====================
+
+service TelemetryAnalytics {
+  rpc SearchEvents(SearchEventsRequest) returns (SearchEventsResponse);
+  rpc GetTimeHistogram(GetTimeHistogramRequest) returns (GetTimeHistogramResponse);
+  rpc GetAggregations(GetAggregationsRequest) returns (GetAggregationsResponse);
+  rpc GetLatestEvents(GetLatestEventsRequest) returns (GetLatestEventsResponse);
+}
