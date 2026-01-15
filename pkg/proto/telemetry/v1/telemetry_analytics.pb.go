@@ -877,11 +877,12 @@ func (x *SearchEventsResponse) GetNextPageToken() string {
 type GetTimeHistogramRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Range         *TimeRange             `protobuf:"bytes,1,opt,name=range,proto3" json:"range,omitempty"`
-	Bucket        *BucketSpec            `protobuf:"bytes,2,opt,name=bucket,proto3" json:"bucket,omitempty"`
+	Bucket        *BucketSpec            `protobuf:"bytes,2,opt,name=bucket,proto3" json:"bucket,omitempty"` // Use bucket.fixed_interval OR resolution (not both)
 	Filter        *TelemetryFilter       `protobuf:"bytes,3,opt,name=filter,proto3" json:"filter,omitempty"`
 	GroupBy       string                 `protobuf:"bytes,4,opt,name=group_by,json=groupBy,proto3" json:"group_by,omitempty"`           // "device_id", "sensor_id", "channel", "event"
 	TopN          int32                  `protobuf:"varint,5,opt,name=top_n,json=topN,proto3" json:"top_n,omitempty"`                   // default 10, max 100
 	MaxBuckets    int32                  `protobuf:"varint,6,opt,name=max_buckets,json=maxBuckets,proto3" json:"max_buckets,omitempty"` // default 1440
+	Resolution    string                 `protobuf:"bytes,7,opt,name=resolution,proto3" json:"resolution,omitempty"`                    // Simpler alternative to bucket: "1m", "5m", "1h", "6h", "1d"
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -956,6 +957,13 @@ func (x *GetTimeHistogramRequest) GetMaxBuckets() int32 {
 		return x.MaxBuckets
 	}
 	return 0
+}
+
+func (x *GetTimeHistogramRequest) GetResolution() string {
+	if x != nil {
+		return x.Resolution
+	}
+	return ""
 }
 
 type TimeSeriesPoint struct {
@@ -1597,7 +1605,7 @@ const file_pkg_proto_telemetry_v1_telemetry_analytics_proto_rawDesc = "" +
 	"\x06events\x18\x01 \x03(\v2&.pkg.proto.telemetry.v1.TelemetryEventR\x06events\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x03R\n" +
 	"totalCount\x12&\n" +
-	"\x0fnext_page_token\x18\x03 \x01(\tR\rnextPageToken\"\xa0\x02\n" +
+	"\x0fnext_page_token\x18\x03 \x01(\tR\rnextPageToken\"\xc0\x02\n" +
 	"\x17GetTimeHistogramRequest\x127\n" +
 	"\x05range\x18\x01 \x01(\v2!.pkg.proto.telemetry.v1.TimeRangeR\x05range\x12:\n" +
 	"\x06bucket\x18\x02 \x01(\v2\".pkg.proto.telemetry.v1.BucketSpecR\x06bucket\x12?\n" +
@@ -1605,7 +1613,10 @@ const file_pkg_proto_telemetry_v1_telemetry_analytics_proto_rawDesc = "" +
 	"\bgroup_by\x18\x04 \x01(\tR\agroupBy\x12\x13\n" +
 	"\x05top_n\x18\x05 \x01(\x05R\x04topN\x12\x1f\n" +
 	"\vmax_buckets\x18\x06 \x01(\x05R\n" +
-	"maxBuckets\"g\n" +
+	"maxBuckets\x12\x1e\n" +
+	"\n" +
+	"resolution\x18\a \x01(\tR\n" +
+	"resolution\"g\n" +
 	"\x0fTimeSeriesPoint\x12\x0e\n" +
 	"\x02ts\x18\x01 \x01(\tR\x02ts\x12\x14\n" +
 	"\x05count\x18\x02 \x01(\x03R\x05count\x12 \n" +
