@@ -19,6 +19,7 @@ PROTOC_FLAGS ?= \
 	--grpc-gateway_out=paths=source_relative,logtostderr=true:${PROTOS_DEST} \
 	--go_out=paths=source_relative:$(PROTOS_DEST) \
 	--go-grpc_out=paths=source_relative,require_unimplemented_servers=false:$(PROTOS_DEST) \
+	--connect-go_out=paths=source_relative:$(PROTOS_DEST) \
 	--validate_out=paths=source_relative,lang=go:$(PROTOS_DEST) \
 	--openapiv2_out $(PROTOS_DEST) --openapiv2_opt logtostderr=true \
 
