@@ -657,6 +657,507 @@ func (x *GetGatewayStatsResponse) GetGateways() []*GatewayStats {
 	return nil
 }
 
+// Pagination carries an opaque page cursor for composite-paginated RPCs.
+type Pagination struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	PageSize      int32                  `protobuf:"varint,1,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`   // default 100, max 1000
+	PageToken     string                 `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"` // opaque; carries the composite after_key
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Pagination) Reset() {
+	*x = Pagination{}
+	mi := &file_pkg_proto_gateway_v2_analytics_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Pagination) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Pagination) ProtoMessage() {}
+
+func (x *Pagination) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_gateway_v2_analytics_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Pagination.ProtoReflect.Descriptor instead.
+func (*Pagination) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_gateway_v2_analytics_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *Pagination) GetPageSize() int32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+func (x *Pagination) GetPageToken() string {
+	if x != nil {
+		return x.PageToken
+	}
+	return ""
+}
+
+type GetSilentGatewaysRequest struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	Baseline         *TimeRange             `protobuf:"bytes,1,opt,name=baseline,proto3" json:"baseline,omitempty"`                                            // required, e.g. now-14d .. now-24h
+	Observe          *TimeRange             `protobuf:"bytes,2,opt,name=observe,proto3" json:"observe,omitempty"`                                              // required, e.g. now-24h .. now
+	Filter           *Filter                `protobuf:"bytes,3,opt,name=filter,proto3" json:"filter,omitempty"`                                                // optional
+	Page             *Pagination            `protobuf:"bytes,4,opt,name=page,proto3" json:"page,omitempty"`                                                    // optional
+	MinBaselinePings int32                  `protobuf:"varint,5,opt,name=min_baseline_pings,json=minBaselinePings,proto3" json:"min_baseline_pings,omitempty"` // optional, default 1
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *GetSilentGatewaysRequest) Reset() {
+	*x = GetSilentGatewaysRequest{}
+	mi := &file_pkg_proto_gateway_v2_analytics_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSilentGatewaysRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSilentGatewaysRequest) ProtoMessage() {}
+
+func (x *GetSilentGatewaysRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_gateway_v2_analytics_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSilentGatewaysRequest.ProtoReflect.Descriptor instead.
+func (*GetSilentGatewaysRequest) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_gateway_v2_analytics_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *GetSilentGatewaysRequest) GetBaseline() *TimeRange {
+	if x != nil {
+		return x.Baseline
+	}
+	return nil
+}
+
+func (x *GetSilentGatewaysRequest) GetObserve() *TimeRange {
+	if x != nil {
+		return x.Observe
+	}
+	return nil
+}
+
+func (x *GetSilentGatewaysRequest) GetFilter() *Filter {
+	if x != nil {
+		return x.Filter
+	}
+	return nil
+}
+
+func (x *GetSilentGatewaysRequest) GetPage() *Pagination {
+	if x != nil {
+		return x.Page
+	}
+	return nil
+}
+
+func (x *GetSilentGatewaysRequest) GetMinBaselinePings() int32 {
+	if x != nil {
+		return x.MinBaselinePings
+	}
+	return 0
+}
+
+type SilentGateway struct {
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	HardwareId            string                 `protobuf:"bytes,1,opt,name=hardware_id,json=hardwareId,proto3" json:"hardware_id,omitempty"`
+	ApplicationId         string                 `protobuf:"bytes,2,opt,name=application_id,json=applicationId,proto3" json:"application_id,omitempty"`
+	DeviceTypeId          string                 `protobuf:"bytes,3,opt,name=device_type_id,json=deviceTypeId,proto3" json:"device_type_id,omitempty"`
+	DpsClientVersion      string                 `protobuf:"bytes,4,opt,name=dps_client_version,json=dpsClientVersion,proto3" json:"dps_client_version,omitempty"`
+	LastSeen              string                 `protobuf:"bytes,5,opt,name=last_seen,json=lastSeen,proto3" json:"last_seen,omitempty"` // RFC3339, max(@timestamp) across baseline
+	BaselinePings         int32                  `protobuf:"varint,6,opt,name=baseline_pings,json=baselinePings,proto3" json:"baseline_pings,omitempty"`
+	BaselineUniqueDevices int32                  `protobuf:"varint,7,opt,name=baseline_unique_devices,json=baselineUniqueDevices,proto3" json:"baseline_unique_devices,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
+}
+
+func (x *SilentGateway) Reset() {
+	*x = SilentGateway{}
+	mi := &file_pkg_proto_gateway_v2_analytics_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SilentGateway) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SilentGateway) ProtoMessage() {}
+
+func (x *SilentGateway) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_gateway_v2_analytics_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SilentGateway.ProtoReflect.Descriptor instead.
+func (*SilentGateway) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_gateway_v2_analytics_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *SilentGateway) GetHardwareId() string {
+	if x != nil {
+		return x.HardwareId
+	}
+	return ""
+}
+
+func (x *SilentGateway) GetApplicationId() string {
+	if x != nil {
+		return x.ApplicationId
+	}
+	return ""
+}
+
+func (x *SilentGateway) GetDeviceTypeId() string {
+	if x != nil {
+		return x.DeviceTypeId
+	}
+	return ""
+}
+
+func (x *SilentGateway) GetDpsClientVersion() string {
+	if x != nil {
+		return x.DpsClientVersion
+	}
+	return ""
+}
+
+func (x *SilentGateway) GetLastSeen() string {
+	if x != nil {
+		return x.LastSeen
+	}
+	return ""
+}
+
+func (x *SilentGateway) GetBaselinePings() int32 {
+	if x != nil {
+		return x.BaselinePings
+	}
+	return 0
+}
+
+func (x *SilentGateway) GetBaselineUniqueDevices() int32 {
+	if x != nil {
+		return x.BaselineUniqueDevices
+	}
+	return 0
+}
+
+type GetSilentGatewaysResponse struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	Gateways            []*SilentGateway       `protobuf:"bytes,1,rep,name=gateways,proto3" json:"gateways,omitempty"`
+	TotalBaselineActive int32                  `protobuf:"varint,2,opt,name=total_baseline_active,json=totalBaselineActive,proto3" json:"total_baseline_active,omitempty"` // distinct hardware_id in baseline, after filter
+	TotalSilent         int32                  `protobuf:"varint,3,opt,name=total_silent,json=totalSilent,proto3" json:"total_silent,omitempty"`                           // distinct hardware_id silent in observe
+	NextPageToken       string                 `protobuf:"bytes,4,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *GetSilentGatewaysResponse) Reset() {
+	*x = GetSilentGatewaysResponse{}
+	mi := &file_pkg_proto_gateway_v2_analytics_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetSilentGatewaysResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetSilentGatewaysResponse) ProtoMessage() {}
+
+func (x *GetSilentGatewaysResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_gateway_v2_analytics_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetSilentGatewaysResponse.ProtoReflect.Descriptor instead.
+func (*GetSilentGatewaysResponse) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_gateway_v2_analytics_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *GetSilentGatewaysResponse) GetGateways() []*SilentGateway {
+	if x != nil {
+		return x.Gateways
+	}
+	return nil
+}
+
+func (x *GetSilentGatewaysResponse) GetTotalBaselineActive() int32 {
+	if x != nil {
+		return x.TotalBaselineActive
+	}
+	return 0
+}
+
+func (x *GetSilentGatewaysResponse) GetTotalSilent() int32 {
+	if x != nil {
+		return x.TotalSilent
+	}
+	return 0
+}
+
+func (x *GetSilentGatewaysResponse) GetNextPageToken() string {
+	if x != nil {
+		return x.NextPageToken
+	}
+	return ""
+}
+
+type GetGatewayBreakdownRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Baseline      *TimeRange             `protobuf:"bytes,1,opt,name=baseline,proto3" json:"baseline,omitempty"`              // required
+	Observe       *TimeRange             `protobuf:"bytes,2,opt,name=observe,proto3" json:"observe,omitempty"`                // required
+	Filter        *Filter                `protobuf:"bytes,3,opt,name=filter,proto3" json:"filter,omitempty"`                  // optional
+	GroupBy       string                 `protobuf:"bytes,4,opt,name=group_by,json=groupBy,proto3" json:"group_by,omitempty"` // required
+	TopN          int32                  `protobuf:"varint,5,opt,name=top_n,json=topN,proto3" json:"top_n,omitempty"`         // optional, default 20, max 100
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetGatewayBreakdownRequest) Reset() {
+	*x = GetGatewayBreakdownRequest{}
+	mi := &file_pkg_proto_gateway_v2_analytics_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGatewayBreakdownRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGatewayBreakdownRequest) ProtoMessage() {}
+
+func (x *GetGatewayBreakdownRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_gateway_v2_analytics_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGatewayBreakdownRequest.ProtoReflect.Descriptor instead.
+func (*GetGatewayBreakdownRequest) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_gateway_v2_analytics_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *GetGatewayBreakdownRequest) GetBaseline() *TimeRange {
+	if x != nil {
+		return x.Baseline
+	}
+	return nil
+}
+
+func (x *GetGatewayBreakdownRequest) GetObserve() *TimeRange {
+	if x != nil {
+		return x.Observe
+	}
+	return nil
+}
+
+func (x *GetGatewayBreakdownRequest) GetFilter() *Filter {
+	if x != nil {
+		return x.Filter
+	}
+	return nil
+}
+
+func (x *GetGatewayBreakdownRequest) GetGroupBy() string {
+	if x != nil {
+		return x.GroupBy
+	}
+	return ""
+}
+
+func (x *GetGatewayBreakdownRequest) GetTopN() int32 {
+	if x != nil {
+		return x.TopN
+	}
+	return 0
+}
+
+type BreakdownBucket struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	Key            string                 `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	BaselineActive int32                  `protobuf:"varint,2,opt,name=baseline_active,json=baselineActive,proto3" json:"baseline_active,omitempty"` // distinct hardware_id in baseline
+	CurrentActive  int32                  `protobuf:"varint,3,opt,name=current_active,json=currentActive,proto3" json:"current_active,omitempty"`    // distinct hardware_id in observe
+	Silent         int32                  `protobuf:"varint,4,opt,name=silent,proto3" json:"silent,omitempty"`                                       // baseline_active - current_active, floored at 0
+	SilentRatio    float64                `protobuf:"fixed64,5,opt,name=silent_ratio,json=silentRatio,proto3" json:"silent_ratio,omitempty"`         // silent / baseline_active, 0 when baseline_active is 0
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *BreakdownBucket) Reset() {
+	*x = BreakdownBucket{}
+	mi := &file_pkg_proto_gateway_v2_analytics_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BreakdownBucket) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BreakdownBucket) ProtoMessage() {}
+
+func (x *BreakdownBucket) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_gateway_v2_analytics_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BreakdownBucket.ProtoReflect.Descriptor instead.
+func (*BreakdownBucket) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_gateway_v2_analytics_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *BreakdownBucket) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *BreakdownBucket) GetBaselineActive() int32 {
+	if x != nil {
+		return x.BaselineActive
+	}
+	return 0
+}
+
+func (x *BreakdownBucket) GetCurrentActive() int32 {
+	if x != nil {
+		return x.CurrentActive
+	}
+	return 0
+}
+
+func (x *BreakdownBucket) GetSilent() int32 {
+	if x != nil {
+		return x.Silent
+	}
+	return 0
+}
+
+func (x *BreakdownBucket) GetSilentRatio() float64 {
+	if x != nil {
+		return x.SilentRatio
+	}
+	return 0
+}
+
+type GetGatewayBreakdownResponse struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	Buckets             []*BreakdownBucket     `protobuf:"bytes,1,rep,name=buckets,proto3" json:"buckets,omitempty"`
+	TotalBaselineActive int32                  `protobuf:"varint,2,opt,name=total_baseline_active,json=totalBaselineActive,proto3" json:"total_baseline_active,omitempty"`
+	TotalCurrentActive  int32                  `protobuf:"varint,3,opt,name=total_current_active,json=totalCurrentActive,proto3" json:"total_current_active,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *GetGatewayBreakdownResponse) Reset() {
+	*x = GetGatewayBreakdownResponse{}
+	mi := &file_pkg_proto_gateway_v2_analytics_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetGatewayBreakdownResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetGatewayBreakdownResponse) ProtoMessage() {}
+
+func (x *GetGatewayBreakdownResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_pkg_proto_gateway_v2_analytics_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetGatewayBreakdownResponse.ProtoReflect.Descriptor instead.
+func (*GetGatewayBreakdownResponse) Descriptor() ([]byte, []int) {
+	return file_pkg_proto_gateway_v2_analytics_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *GetGatewayBreakdownResponse) GetBuckets() []*BreakdownBucket {
+	if x != nil {
+		return x.Buckets
+	}
+	return nil
+}
+
+func (x *GetGatewayBreakdownResponse) GetTotalBaselineActive() int32 {
+	if x != nil {
+		return x.TotalBaselineActive
+	}
+	return 0
+}
+
+func (x *GetGatewayBreakdownResponse) GetTotalCurrentActive() int32 {
+	if x != nil {
+		return x.TotalCurrentActive
+	}
+	return 0
+}
+
 var File_pkg_proto_gateway_v2_analytics_proto protoreflect.FileDescriptor
 
 const file_pkg_proto_gateway_v2_analytics_proto_rawDesc = "" +
@@ -706,10 +1207,53 @@ const file_pkg_proto_gateway_v2_analytics_proto_rawDesc = "" +
 	"\x16rx_packets_received_ok\x18\x04 \x01(\x04R\x13rxPacketsReceivedOk\x12#\n" +
 	"\rsuccess_ratio\x18\x05 \x01(\x01R\fsuccessRatio\"Y\n" +
 	"\x17GetGatewayStatsResponse\x12>\n" +
-	"\bgateways\x18\x01 \x03(\v2\".pkg.proto.gateway.v2.GatewayStatsR\bgateways2\xf5\x01\n" +
+	"\bgateways\x18\x01 \x03(\v2\".pkg.proto.gateway.v2.GatewayStatsR\bgateways\"H\n" +
+	"\n" +
+	"Pagination\x12\x1b\n" +
+	"\tpage_size\x18\x01 \x01(\x05R\bpageSize\x12\x1d\n" +
+	"\n" +
+	"page_token\x18\x02 \x01(\tR\tpageToken\"\xac\x02\n" +
+	"\x18GetSilentGatewaysRequest\x12;\n" +
+	"\bbaseline\x18\x01 \x01(\v2\x1f.pkg.proto.gateway.v2.TimeRangeR\bbaseline\x129\n" +
+	"\aobserve\x18\x02 \x01(\v2\x1f.pkg.proto.gateway.v2.TimeRangeR\aobserve\x124\n" +
+	"\x06filter\x18\x03 \x01(\v2\x1c.pkg.proto.gateway.v2.FilterR\x06filter\x124\n" +
+	"\x04page\x18\x04 \x01(\v2 .pkg.proto.gateway.v2.PaginationR\x04page\x12,\n" +
+	"\x12min_baseline_pings\x18\x05 \x01(\x05R\x10minBaselinePings\"\xa7\x02\n" +
+	"\rSilentGateway\x12\x1f\n" +
+	"\vhardware_id\x18\x01 \x01(\tR\n" +
+	"hardwareId\x12%\n" +
+	"\x0eapplication_id\x18\x02 \x01(\tR\rapplicationId\x12$\n" +
+	"\x0edevice_type_id\x18\x03 \x01(\tR\fdeviceTypeId\x12,\n" +
+	"\x12dps_client_version\x18\x04 \x01(\tR\x10dpsClientVersion\x12\x1b\n" +
+	"\tlast_seen\x18\x05 \x01(\tR\blastSeen\x12%\n" +
+	"\x0ebaseline_pings\x18\x06 \x01(\x05R\rbaselinePings\x126\n" +
+	"\x17baseline_unique_devices\x18\a \x01(\x05R\x15baselineUniqueDevices\"\xdb\x01\n" +
+	"\x19GetSilentGatewaysResponse\x12?\n" +
+	"\bgateways\x18\x01 \x03(\v2#.pkg.proto.gateway.v2.SilentGatewayR\bgateways\x122\n" +
+	"\x15total_baseline_active\x18\x02 \x01(\x05R\x13totalBaselineActive\x12!\n" +
+	"\ftotal_silent\x18\x03 \x01(\x05R\vtotalSilent\x12&\n" +
+	"\x0fnext_page_token\x18\x04 \x01(\tR\rnextPageToken\"\xfa\x01\n" +
+	"\x1aGetGatewayBreakdownRequest\x12;\n" +
+	"\bbaseline\x18\x01 \x01(\v2\x1f.pkg.proto.gateway.v2.TimeRangeR\bbaseline\x129\n" +
+	"\aobserve\x18\x02 \x01(\v2\x1f.pkg.proto.gateway.v2.TimeRangeR\aobserve\x124\n" +
+	"\x06filter\x18\x03 \x01(\v2\x1c.pkg.proto.gateway.v2.FilterR\x06filter\x12\x19\n" +
+	"\bgroup_by\x18\x04 \x01(\tR\agroupBy\x12\x13\n" +
+	"\x05top_n\x18\x05 \x01(\x05R\x04topN\"\xae\x01\n" +
+	"\x0fBreakdownBucket\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12'\n" +
+	"\x0fbaseline_active\x18\x02 \x01(\x05R\x0ebaselineActive\x12%\n" +
+	"\x0ecurrent_active\x18\x03 \x01(\x05R\rcurrentActive\x12\x16\n" +
+	"\x06silent\x18\x04 \x01(\x05R\x06silent\x12!\n" +
+	"\fsilent_ratio\x18\x05 \x01(\x01R\vsilentRatio\"\xc4\x01\n" +
+	"\x1bGetGatewayBreakdownResponse\x12?\n" +
+	"\abuckets\x18\x01 \x03(\v2%.pkg.proto.gateway.v2.BreakdownBucketR\abuckets\x122\n" +
+	"\x15total_baseline_active\x18\x02 \x01(\x05R\x13totalBaselineActive\x120\n" +
+	"\x14total_current_active\x18\x03 \x01(\x05R\x12totalCurrentActive2\xe7\x03\n" +
 	"\x10GatewayAnalytics\x12q\n" +
 	"\x10GetPingHistogram\x12-.pkg.proto.gateway.v2.GetPingHistogramRequest\x1a..pkg.proto.gateway.v2.GetPingHistogramResponse\x12n\n" +
-	"\x0fGetGatewayStats\x12,.pkg.proto.gateway.v2.GetGatewayStatsRequest\x1a-.pkg.proto.gateway.v2.GetGatewayStatsResponseB=Z;github.com/myDevicesIoT/protos/pkg/proto/gateway/v2;gatewayb\x06proto3"
+	"\x0fGetGatewayStats\x12,.pkg.proto.gateway.v2.GetGatewayStatsRequest\x1a-.pkg.proto.gateway.v2.GetGatewayStatsResponse\x12t\n" +
+	"\x11GetSilentGateways\x12..pkg.proto.gateway.v2.GetSilentGatewaysRequest\x1a/.pkg.proto.gateway.v2.GetSilentGatewaysResponse\x12z\n" +
+	"\x13GetGatewayBreakdown\x120.pkg.proto.gateway.v2.GetGatewayBreakdownRequest\x1a1.pkg.proto.gateway.v2.GetGatewayBreakdownResponseB=Z;github.com/myDevicesIoT/protos/pkg/proto/gateway/v2;gatewayb\x06proto3"
 
 var (
 	file_pkg_proto_gateway_v2_analytics_proto_rawDescOnce sync.Once
@@ -723,19 +1267,26 @@ func file_pkg_proto_gateway_v2_analytics_proto_rawDescGZIP() []byte {
 	return file_pkg_proto_gateway_v2_analytics_proto_rawDescData
 }
 
-var file_pkg_proto_gateway_v2_analytics_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_pkg_proto_gateway_v2_analytics_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_pkg_proto_gateway_v2_analytics_proto_goTypes = []any{
-	(*TimeRange)(nil),                // 0: pkg.proto.gateway.v2.TimeRange
-	(*Filter)(nil),                   // 1: pkg.proto.gateway.v2.Filter
-	(*BucketSpec)(nil),               // 2: pkg.proto.gateway.v2.BucketSpec
-	(*SeriesPoint)(nil),              // 3: pkg.proto.gateway.v2.SeriesPoint
-	(*BucketSeries)(nil),             // 4: pkg.proto.gateway.v2.BucketSeries
-	(*GetPingHistogramRequest)(nil),  // 5: pkg.proto.gateway.v2.GetPingHistogramRequest
-	(*GetPingHistogramResponse)(nil), // 6: pkg.proto.gateway.v2.GetPingHistogramResponse
-	(*HistogramBucket)(nil),          // 7: pkg.proto.gateway.v2.HistogramBucket
-	(*GetGatewayStatsRequest)(nil),   // 8: pkg.proto.gateway.v2.GetGatewayStatsRequest
-	(*GatewayStats)(nil),             // 9: pkg.proto.gateway.v2.GatewayStats
-	(*GetGatewayStatsResponse)(nil),  // 10: pkg.proto.gateway.v2.GetGatewayStatsResponse
+	(*TimeRange)(nil),                   // 0: pkg.proto.gateway.v2.TimeRange
+	(*Filter)(nil),                      // 1: pkg.proto.gateway.v2.Filter
+	(*BucketSpec)(nil),                  // 2: pkg.proto.gateway.v2.BucketSpec
+	(*SeriesPoint)(nil),                 // 3: pkg.proto.gateway.v2.SeriesPoint
+	(*BucketSeries)(nil),                // 4: pkg.proto.gateway.v2.BucketSeries
+	(*GetPingHistogramRequest)(nil),     // 5: pkg.proto.gateway.v2.GetPingHistogramRequest
+	(*GetPingHistogramResponse)(nil),    // 6: pkg.proto.gateway.v2.GetPingHistogramResponse
+	(*HistogramBucket)(nil),             // 7: pkg.proto.gateway.v2.HistogramBucket
+	(*GetGatewayStatsRequest)(nil),      // 8: pkg.proto.gateway.v2.GetGatewayStatsRequest
+	(*GatewayStats)(nil),                // 9: pkg.proto.gateway.v2.GatewayStats
+	(*GetGatewayStatsResponse)(nil),     // 10: pkg.proto.gateway.v2.GetGatewayStatsResponse
+	(*Pagination)(nil),                  // 11: pkg.proto.gateway.v2.Pagination
+	(*GetSilentGatewaysRequest)(nil),    // 12: pkg.proto.gateway.v2.GetSilentGatewaysRequest
+	(*SilentGateway)(nil),               // 13: pkg.proto.gateway.v2.SilentGateway
+	(*GetSilentGatewaysResponse)(nil),   // 14: pkg.proto.gateway.v2.GetSilentGatewaysResponse
+	(*GetGatewayBreakdownRequest)(nil),  // 15: pkg.proto.gateway.v2.GetGatewayBreakdownRequest
+	(*BreakdownBucket)(nil),             // 16: pkg.proto.gateway.v2.BreakdownBucket
+	(*GetGatewayBreakdownResponse)(nil), // 17: pkg.proto.gateway.v2.GetGatewayBreakdownResponse
 }
 var file_pkg_proto_gateway_v2_analytics_proto_depIdxs = []int32{
 	3,  // 0: pkg.proto.gateway.v2.BucketSeries.points:type_name -> pkg.proto.gateway.v2.SeriesPoint
@@ -746,15 +1297,28 @@ var file_pkg_proto_gateway_v2_analytics_proto_depIdxs = []int32{
 	1,  // 5: pkg.proto.gateway.v2.GetGatewayStatsRequest.filter:type_name -> pkg.proto.gateway.v2.Filter
 	0,  // 6: pkg.proto.gateway.v2.GetGatewayStatsRequest.range:type_name -> pkg.proto.gateway.v2.TimeRange
 	9,  // 7: pkg.proto.gateway.v2.GetGatewayStatsResponse.gateways:type_name -> pkg.proto.gateway.v2.GatewayStats
-	5,  // 8: pkg.proto.gateway.v2.GatewayAnalytics.GetPingHistogram:input_type -> pkg.proto.gateway.v2.GetPingHistogramRequest
-	8,  // 9: pkg.proto.gateway.v2.GatewayAnalytics.GetGatewayStats:input_type -> pkg.proto.gateway.v2.GetGatewayStatsRequest
-	6,  // 10: pkg.proto.gateway.v2.GatewayAnalytics.GetPingHistogram:output_type -> pkg.proto.gateway.v2.GetPingHistogramResponse
-	10, // 11: pkg.proto.gateway.v2.GatewayAnalytics.GetGatewayStats:output_type -> pkg.proto.gateway.v2.GetGatewayStatsResponse
-	10, // [10:12] is the sub-list for method output_type
-	8,  // [8:10] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	0,  // 8: pkg.proto.gateway.v2.GetSilentGatewaysRequest.baseline:type_name -> pkg.proto.gateway.v2.TimeRange
+	0,  // 9: pkg.proto.gateway.v2.GetSilentGatewaysRequest.observe:type_name -> pkg.proto.gateway.v2.TimeRange
+	1,  // 10: pkg.proto.gateway.v2.GetSilentGatewaysRequest.filter:type_name -> pkg.proto.gateway.v2.Filter
+	11, // 11: pkg.proto.gateway.v2.GetSilentGatewaysRequest.page:type_name -> pkg.proto.gateway.v2.Pagination
+	13, // 12: pkg.proto.gateway.v2.GetSilentGatewaysResponse.gateways:type_name -> pkg.proto.gateway.v2.SilentGateway
+	0,  // 13: pkg.proto.gateway.v2.GetGatewayBreakdownRequest.baseline:type_name -> pkg.proto.gateway.v2.TimeRange
+	0,  // 14: pkg.proto.gateway.v2.GetGatewayBreakdownRequest.observe:type_name -> pkg.proto.gateway.v2.TimeRange
+	1,  // 15: pkg.proto.gateway.v2.GetGatewayBreakdownRequest.filter:type_name -> pkg.proto.gateway.v2.Filter
+	16, // 16: pkg.proto.gateway.v2.GetGatewayBreakdownResponse.buckets:type_name -> pkg.proto.gateway.v2.BreakdownBucket
+	5,  // 17: pkg.proto.gateway.v2.GatewayAnalytics.GetPingHistogram:input_type -> pkg.proto.gateway.v2.GetPingHistogramRequest
+	8,  // 18: pkg.proto.gateway.v2.GatewayAnalytics.GetGatewayStats:input_type -> pkg.proto.gateway.v2.GetGatewayStatsRequest
+	12, // 19: pkg.proto.gateway.v2.GatewayAnalytics.GetSilentGateways:input_type -> pkg.proto.gateway.v2.GetSilentGatewaysRequest
+	15, // 20: pkg.proto.gateway.v2.GatewayAnalytics.GetGatewayBreakdown:input_type -> pkg.proto.gateway.v2.GetGatewayBreakdownRequest
+	6,  // 21: pkg.proto.gateway.v2.GatewayAnalytics.GetPingHistogram:output_type -> pkg.proto.gateway.v2.GetPingHistogramResponse
+	10, // 22: pkg.proto.gateway.v2.GatewayAnalytics.GetGatewayStats:output_type -> pkg.proto.gateway.v2.GetGatewayStatsResponse
+	14, // 23: pkg.proto.gateway.v2.GatewayAnalytics.GetSilentGateways:output_type -> pkg.proto.gateway.v2.GetSilentGatewaysResponse
+	17, // 24: pkg.proto.gateway.v2.GatewayAnalytics.GetGatewayBreakdown:output_type -> pkg.proto.gateway.v2.GetGatewayBreakdownResponse
+	21, // [21:25] is the sub-list for method output_type
+	17, // [17:21] is the sub-list for method input_type
+	17, // [17:17] is the sub-list for extension type_name
+	17, // [17:17] is the sub-list for extension extendee
+	0,  // [0:17] is the sub-list for field type_name
 }
 
 func init() { file_pkg_proto_gateway_v2_analytics_proto_init() }
@@ -768,7 +1332,7 @@ func file_pkg_proto_gateway_v2_analytics_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_pkg_proto_gateway_v2_analytics_proto_rawDesc), len(file_pkg_proto_gateway_v2_analytics_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   11,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

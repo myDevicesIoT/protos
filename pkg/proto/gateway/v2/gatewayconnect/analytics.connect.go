@@ -39,12 +39,20 @@ const (
 	// GatewayAnalyticsGetGatewayStatsProcedure is the fully-qualified name of the GatewayAnalytics's
 	// GetGatewayStats RPC.
 	GatewayAnalyticsGetGatewayStatsProcedure = "/pkg.proto.gateway.v2.GatewayAnalytics/GetGatewayStats"
+	// GatewayAnalyticsGetSilentGatewaysProcedure is the fully-qualified name of the GatewayAnalytics's
+	// GetSilentGateways RPC.
+	GatewayAnalyticsGetSilentGatewaysProcedure = "/pkg.proto.gateway.v2.GatewayAnalytics/GetSilentGateways"
+	// GatewayAnalyticsGetGatewayBreakdownProcedure is the fully-qualified name of the
+	// GatewayAnalytics's GetGatewayBreakdown RPC.
+	GatewayAnalyticsGetGatewayBreakdownProcedure = "/pkg.proto.gateway.v2.GatewayAnalytics/GetGatewayBreakdown"
 )
 
 // GatewayAnalyticsClient is a client for the pkg.proto.gateway.v2.GatewayAnalytics service.
 type GatewayAnalyticsClient interface {
 	GetPingHistogram(context.Context, *connect.Request[v2.GetPingHistogramRequest]) (*connect.Response[v2.GetPingHistogramResponse], error)
 	GetGatewayStats(context.Context, *connect.Request[v2.GetGatewayStatsRequest]) (*connect.Response[v2.GetGatewayStatsResponse], error)
+	GetSilentGateways(context.Context, *connect.Request[v2.GetSilentGatewaysRequest]) (*connect.Response[v2.GetSilentGatewaysResponse], error)
+	GetGatewayBreakdown(context.Context, *connect.Request[v2.GetGatewayBreakdownRequest]) (*connect.Response[v2.GetGatewayBreakdownResponse], error)
 }
 
 // NewGatewayAnalyticsClient constructs a client for the pkg.proto.gateway.v2.GatewayAnalytics
@@ -70,13 +78,27 @@ func NewGatewayAnalyticsClient(httpClient connect.HTTPClient, baseURL string, op
 			connect.WithSchema(gatewayAnalyticsMethods.ByName("GetGatewayStats")),
 			connect.WithClientOptions(opts...),
 		),
+		getSilentGateways: connect.NewClient[v2.GetSilentGatewaysRequest, v2.GetSilentGatewaysResponse](
+			httpClient,
+			baseURL+GatewayAnalyticsGetSilentGatewaysProcedure,
+			connect.WithSchema(gatewayAnalyticsMethods.ByName("GetSilentGateways")),
+			connect.WithClientOptions(opts...),
+		),
+		getGatewayBreakdown: connect.NewClient[v2.GetGatewayBreakdownRequest, v2.GetGatewayBreakdownResponse](
+			httpClient,
+			baseURL+GatewayAnalyticsGetGatewayBreakdownProcedure,
+			connect.WithSchema(gatewayAnalyticsMethods.ByName("GetGatewayBreakdown")),
+			connect.WithClientOptions(opts...),
+		),
 	}
 }
 
 // gatewayAnalyticsClient implements GatewayAnalyticsClient.
 type gatewayAnalyticsClient struct {
-	getPingHistogram *connect.Client[v2.GetPingHistogramRequest, v2.GetPingHistogramResponse]
-	getGatewayStats  *connect.Client[v2.GetGatewayStatsRequest, v2.GetGatewayStatsResponse]
+	getPingHistogram    *connect.Client[v2.GetPingHistogramRequest, v2.GetPingHistogramResponse]
+	getGatewayStats     *connect.Client[v2.GetGatewayStatsRequest, v2.GetGatewayStatsResponse]
+	getSilentGateways   *connect.Client[v2.GetSilentGatewaysRequest, v2.GetSilentGatewaysResponse]
+	getGatewayBreakdown *connect.Client[v2.GetGatewayBreakdownRequest, v2.GetGatewayBreakdownResponse]
 }
 
 // GetPingHistogram calls pkg.proto.gateway.v2.GatewayAnalytics.GetPingHistogram.
@@ -89,11 +111,23 @@ func (c *gatewayAnalyticsClient) GetGatewayStats(ctx context.Context, req *conne
 	return c.getGatewayStats.CallUnary(ctx, req)
 }
 
+// GetSilentGateways calls pkg.proto.gateway.v2.GatewayAnalytics.GetSilentGateways.
+func (c *gatewayAnalyticsClient) GetSilentGateways(ctx context.Context, req *connect.Request[v2.GetSilentGatewaysRequest]) (*connect.Response[v2.GetSilentGatewaysResponse], error) {
+	return c.getSilentGateways.CallUnary(ctx, req)
+}
+
+// GetGatewayBreakdown calls pkg.proto.gateway.v2.GatewayAnalytics.GetGatewayBreakdown.
+func (c *gatewayAnalyticsClient) GetGatewayBreakdown(ctx context.Context, req *connect.Request[v2.GetGatewayBreakdownRequest]) (*connect.Response[v2.GetGatewayBreakdownResponse], error) {
+	return c.getGatewayBreakdown.CallUnary(ctx, req)
+}
+
 // GatewayAnalyticsHandler is an implementation of the pkg.proto.gateway.v2.GatewayAnalytics
 // service.
 type GatewayAnalyticsHandler interface {
 	GetPingHistogram(context.Context, *connect.Request[v2.GetPingHistogramRequest]) (*connect.Response[v2.GetPingHistogramResponse], error)
 	GetGatewayStats(context.Context, *connect.Request[v2.GetGatewayStatsRequest]) (*connect.Response[v2.GetGatewayStatsResponse], error)
+	GetSilentGateways(context.Context, *connect.Request[v2.GetSilentGatewaysRequest]) (*connect.Response[v2.GetSilentGatewaysResponse], error)
+	GetGatewayBreakdown(context.Context, *connect.Request[v2.GetGatewayBreakdownRequest]) (*connect.Response[v2.GetGatewayBreakdownResponse], error)
 }
 
 // NewGatewayAnalyticsHandler builds an HTTP handler from the service implementation. It returns the
@@ -115,12 +149,28 @@ func NewGatewayAnalyticsHandler(svc GatewayAnalyticsHandler, opts ...connect.Han
 		connect.WithSchema(gatewayAnalyticsMethods.ByName("GetGatewayStats")),
 		connect.WithHandlerOptions(opts...),
 	)
+	gatewayAnalyticsGetSilentGatewaysHandler := connect.NewUnaryHandler(
+		GatewayAnalyticsGetSilentGatewaysProcedure,
+		svc.GetSilentGateways,
+		connect.WithSchema(gatewayAnalyticsMethods.ByName("GetSilentGateways")),
+		connect.WithHandlerOptions(opts...),
+	)
+	gatewayAnalyticsGetGatewayBreakdownHandler := connect.NewUnaryHandler(
+		GatewayAnalyticsGetGatewayBreakdownProcedure,
+		svc.GetGatewayBreakdown,
+		connect.WithSchema(gatewayAnalyticsMethods.ByName("GetGatewayBreakdown")),
+		connect.WithHandlerOptions(opts...),
+	)
 	return "/pkg.proto.gateway.v2.GatewayAnalytics/", http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		switch r.URL.Path {
 		case GatewayAnalyticsGetPingHistogramProcedure:
 			gatewayAnalyticsGetPingHistogramHandler.ServeHTTP(w, r)
 		case GatewayAnalyticsGetGatewayStatsProcedure:
 			gatewayAnalyticsGetGatewayStatsHandler.ServeHTTP(w, r)
+		case GatewayAnalyticsGetSilentGatewaysProcedure:
+			gatewayAnalyticsGetSilentGatewaysHandler.ServeHTTP(w, r)
+		case GatewayAnalyticsGetGatewayBreakdownProcedure:
+			gatewayAnalyticsGetGatewayBreakdownHandler.ServeHTTP(w, r)
 		default:
 			http.NotFound(w, r)
 		}
@@ -136,4 +186,12 @@ func (UnimplementedGatewayAnalyticsHandler) GetPingHistogram(context.Context, *c
 
 func (UnimplementedGatewayAnalyticsHandler) GetGatewayStats(context.Context, *connect.Request[v2.GetGatewayStatsRequest]) (*connect.Response[v2.GetGatewayStatsResponse], error) {
 	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("pkg.proto.gateway.v2.GatewayAnalytics.GetGatewayStats is not implemented"))
+}
+
+func (UnimplementedGatewayAnalyticsHandler) GetSilentGateways(context.Context, *connect.Request[v2.GetSilentGatewaysRequest]) (*connect.Response[v2.GetSilentGatewaysResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("pkg.proto.gateway.v2.GatewayAnalytics.GetSilentGateways is not implemented"))
+}
+
+func (UnimplementedGatewayAnalyticsHandler) GetGatewayBreakdown(context.Context, *connect.Request[v2.GetGatewayBreakdownRequest]) (*connect.Response[v2.GetGatewayBreakdownResponse], error) {
+	return nil, connect.NewError(connect.CodeUnimplemented, errors.New("pkg.proto.gateway.v2.GatewayAnalytics.GetGatewayBreakdown is not implemented"))
 }

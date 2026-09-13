@@ -19,8 +19,10 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	GatewayAnalytics_GetPingHistogram_FullMethodName = "/pkg.proto.gateway.v2.GatewayAnalytics/GetPingHistogram"
-	GatewayAnalytics_GetGatewayStats_FullMethodName  = "/pkg.proto.gateway.v2.GatewayAnalytics/GetGatewayStats"
+	GatewayAnalytics_GetPingHistogram_FullMethodName    = "/pkg.proto.gateway.v2.GatewayAnalytics/GetPingHistogram"
+	GatewayAnalytics_GetGatewayStats_FullMethodName     = "/pkg.proto.gateway.v2.GatewayAnalytics/GetGatewayStats"
+	GatewayAnalytics_GetSilentGateways_FullMethodName   = "/pkg.proto.gateway.v2.GatewayAnalytics/GetSilentGateways"
+	GatewayAnalytics_GetGatewayBreakdown_FullMethodName = "/pkg.proto.gateway.v2.GatewayAnalytics/GetGatewayBreakdown"
 )
 
 // GatewayAnalyticsClient is the client API for GatewayAnalytics service.
@@ -29,6 +31,8 @@ const (
 type GatewayAnalyticsClient interface {
 	GetPingHistogram(ctx context.Context, in *GetPingHistogramRequest, opts ...grpc.CallOption) (*GetPingHistogramResponse, error)
 	GetGatewayStats(ctx context.Context, in *GetGatewayStatsRequest, opts ...grpc.CallOption) (*GetGatewayStatsResponse, error)
+	GetSilentGateways(ctx context.Context, in *GetSilentGatewaysRequest, opts ...grpc.CallOption) (*GetSilentGatewaysResponse, error)
+	GetGatewayBreakdown(ctx context.Context, in *GetGatewayBreakdownRequest, opts ...grpc.CallOption) (*GetGatewayBreakdownResponse, error)
 }
 
 type gatewayAnalyticsClient struct {
@@ -59,16 +63,37 @@ func (c *gatewayAnalyticsClient) GetGatewayStats(ctx context.Context, in *GetGat
 	return out, nil
 }
 
+func (c *gatewayAnalyticsClient) GetSilentGateways(ctx context.Context, in *GetSilentGatewaysRequest, opts ...grpc.CallOption) (*GetSilentGatewaysResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSilentGatewaysResponse)
+	err := c.cc.Invoke(ctx, GatewayAnalytics_GetSilentGateways_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *gatewayAnalyticsClient) GetGatewayBreakdown(ctx context.Context, in *GetGatewayBreakdownRequest, opts ...grpc.CallOption) (*GetGatewayBreakdownResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetGatewayBreakdownResponse)
+	err := c.cc.Invoke(ctx, GatewayAnalytics_GetGatewayBreakdown_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GatewayAnalyticsServer is the server API for GatewayAnalytics service.
-// All implementations must embed UnimplementedGatewayAnalyticsServer
+// All implementations should embed UnimplementedGatewayAnalyticsServer
 // for forward compatibility.
 type GatewayAnalyticsServer interface {
 	GetPingHistogram(context.Context, *GetPingHistogramRequest) (*GetPingHistogramResponse, error)
 	GetGatewayStats(context.Context, *GetGatewayStatsRequest) (*GetGatewayStatsResponse, error)
-	mustEmbedUnimplementedGatewayAnalyticsServer()
+	GetSilentGateways(context.Context, *GetSilentGatewaysRequest) (*GetSilentGatewaysResponse, error)
+	GetGatewayBreakdown(context.Context, *GetGatewayBreakdownRequest) (*GetGatewayBreakdownResponse, error)
 }
 
-// UnimplementedGatewayAnalyticsServer must be embedded to have
+// UnimplementedGatewayAnalyticsServer should be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
@@ -81,8 +106,13 @@ func (UnimplementedGatewayAnalyticsServer) GetPingHistogram(context.Context, *Ge
 func (UnimplementedGatewayAnalyticsServer) GetGatewayStats(context.Context, *GetGatewayStatsRequest) (*GetGatewayStatsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGatewayStats not implemented")
 }
-func (UnimplementedGatewayAnalyticsServer) mustEmbedUnimplementedGatewayAnalyticsServer() {}
-func (UnimplementedGatewayAnalyticsServer) testEmbeddedByValue()                          {}
+func (UnimplementedGatewayAnalyticsServer) GetSilentGateways(context.Context, *GetSilentGatewaysRequest) (*GetSilentGatewaysResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSilentGateways not implemented")
+}
+func (UnimplementedGatewayAnalyticsServer) GetGatewayBreakdown(context.Context, *GetGatewayBreakdownRequest) (*GetGatewayBreakdownResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetGatewayBreakdown not implemented")
+}
+func (UnimplementedGatewayAnalyticsServer) testEmbeddedByValue() {}
 
 // UnsafeGatewayAnalyticsServer may be embedded to opt out of forward compatibility for this service.
 // Use of this interface is not recommended, as added methods to GatewayAnalyticsServer will
@@ -138,6 +168,42 @@ func _GatewayAnalytics_GetGatewayStats_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _GatewayAnalytics_GetSilentGateways_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetSilentGatewaysRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GatewayAnalyticsServer).GetSilentGateways(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GatewayAnalytics_GetSilentGateways_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GatewayAnalyticsServer).GetSilentGateways(ctx, req.(*GetSilentGatewaysRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GatewayAnalytics_GetGatewayBreakdown_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGatewayBreakdownRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GatewayAnalyticsServer).GetGatewayBreakdown(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GatewayAnalytics_GetGatewayBreakdown_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GatewayAnalyticsServer).GetGatewayBreakdown(ctx, req.(*GetGatewayBreakdownRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // GatewayAnalytics_ServiceDesc is the grpc.ServiceDesc for GatewayAnalytics service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +218,14 @@ var GatewayAnalytics_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetGatewayStats",
 			Handler:    _GatewayAnalytics_GetGatewayStats_Handler,
+		},
+		{
+			MethodName: "GetSilentGateways",
+			Handler:    _GatewayAnalytics_GetSilentGateways_Handler,
+		},
+		{
+			MethodName: "GetGatewayBreakdown",
+			Handler:    _GatewayAnalytics_GetGatewayBreakdown_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
