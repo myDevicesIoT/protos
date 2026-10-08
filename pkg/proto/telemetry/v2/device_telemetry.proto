@@ -1,0 +1,217 @@
+syntax = "proto3";
+
+package pkg.proto.telemetry.v2;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/myDevicesIoT/protos/pkg/proto/telemetry/v2;telemetry";
+
+// ==================== Shared types ====================
+
+// TimeRange bounds a query. start and end accept RFC3339, 2006-01-02,
+// 2006-01-02T15:04:05, "now" and relative forms such as "now-7d".
+// timezone is an IANA name used only for bucket alignment; default UTC.
+message TimeRange {
+  string start = 1;
+  string end = 2;
+  string timezone = 3;
+}
+
+// Scope narrows a request to one tenant. Both fields are optional term
+// filters; an empty field means no filter.
+message Scope {
+  string user_id = 1;
+  string application_id = 2;
+}
+
+message Geo {
+  double lat = 1;
+  double lon = 2;
+}
+
+// Reading is one sensor value inside an uplink.
+message Reading {
+  string sensor_id = 1;
+  string channel = 2;
+  optional double value = 3;
+  string value_text = 4;
+  string unit = 5;
+  string type = 6;
+  string name = 7;
+  optional Geo geo = 8;
+  string event = 9;
+}
+
+// Row is one uplink: every reading that arrived together.
+message Row {
+  google.protobuf.Timestamp ts = 1;
+  string correlation_id = 2;
+  repeated Reading readings = 3;
+}
+
+enum Interval {
+  INTERVAL_UNSPECIFIED = 0;
+  M1 = 1;
+  M5 = 2;
+  M15 = 3;
+  H1 = 4;
+  D1 = 5;
+  W1 = 6;
+  MO1 = 7;
+}
+
+enum Metric {
+  METRIC_UNSPECIFIED = 0;
+  MIN = 1;
+  MAX = 2;
+  AVG = 3;
+  SUM = 4;
+  COUNT = 5;
+  LAST = 6;
+}
+
+// ==================== GetDeviceStates ====================
+
+message GetDeviceStatesRequest {
+  repeated string device_ids = 1; // 1..100
+  repeated string channels = 2;   // optional filter
+  Scope scope = 3;
+}
+
+message ChannelState {
+  string channel = 1;
+  string sensor_id = 2;
+  google.protobuf.Timestamp ts = 3;
+  optional double value = 4;
+  string value_text = 5;
+  string unit = 6;
+  string type = 7;
+  string name = 8;
+  optional Geo geo = 9;
+  string event = 10;
+}
+
+message DeviceState {
+  string device_id = 1;
+  google.protobuf.Timestamp last_seen = 2;
+  repeated ChannelState channels = 3;
+  bool found = 4;
+}
+
+message GetDeviceStatesResponse {
+  repeated DeviceState devices = 1;
+}
+
+// ==================== ListReadings ====================
+
+message ListReadingsRequest {
+  string device_id = 1;
+  repeated string sensor_ids = 2;
+  repeated string channels = 3;
+  TimeRange range = 4;
+  bool ascending = 5;
+  int32 page_size = 6; // rows, default 50, max 500
+  string page_token = 7;
+  Scope scope = 8;
+}
+
+message ListReadingsResponse {
+  repeated Row rows = 1;
+  string next_page_token = 2;
+}
+
+// ==================== GetSeries ====================
+
+message GetSeriesRequest {
+  repeated string device_ids = 1; // 1..20
+  repeated string sensor_ids = 2;
+  TimeRange range = 3;
+  Interval interval = 4;
+  int32 max_points = 5;
+  repeated Metric metrics = 6; // default MIN, MAX, AVG
+  Scope scope = 7;
+}
+
+message Point {
+  google.protobuf.Timestamp ts = 1;
+  optional double min = 2;
+  optional double max = 3;
+  optional double avg = 4;
+  optional double sum = 5;
+  int64 count = 6;
+  optional double last = 7;
+}
+
+message Series {
+  string device_id = 1;
+  string sensor_id = 2;
+  string channel = 3;
+  string unit = 4;
+  string name = 5;
+  Interval interval = 6;
+  repeated Point points = 7;
+}
+
+message GetSeriesResponse {
+  repeated Series series = 1;
+}
+
+// ==================== GetSummaries ====================
+
+message GetSummariesRequest {
+  string device_id = 1;
+  repeated string sensor_ids = 2;
+  TimeRange range = 3;
+  Scope scope = 4;
+}
+
+message Summary {
+  string sensor_id = 1;
+  string channel = 2;
+  string unit = 3;
+  string name = 4;
+  optional double min = 5;
+  optional double max = 6;
+  optional double avg = 7;
+  optional double sum = 8;
+  int64 count = 9;
+  google.protobuf.Timestamp first_ts = 10;
+  optional double first_value = 11;
+  google.protobuf.Timestamp last_ts = 12;
+  optional double last_value = 13;
+}
+
+message GetSummariesResponse {
+  repeated Summary summaries = 1;
+}
+
+// ==================== ExportReadings ====================
+
+message ExportReadingsRequest {
+  string device_id = 1;
+  repeated string sensor_ids = 2;
+  repeated string channels = 3;
+  TimeRange range = 4;
+  bool ascending = 5;
+  int32 page_size = 6; // rows, default 1000, max 10000
+  string cursor = 7;   // empty on the first call
+  Scope scope = 8;
+}
+
+message ExportReadingsResponse {
+  repeated Row rows = 1;
+  string cursor = 2;
+  bool done = 3;
+}
+
+// ==================== Service ====================
+
+// DeviceTelemetry serves device state, history logs, charts and exports
+// for dashboards. Replaces the delorean-es read API.
+service DeviceTelemetry {
+  rpc GetDeviceStates(GetDeviceStatesRequest) returns (GetDeviceStatesResponse);
+  rpc ListReadings(ListReadingsRequest) returns (ListReadingsResponse);
+  rpc GetSeries(GetSeriesRequest) returns (GetSeriesResponse);
+  rpc GetSummaries(GetSummariesRequest) returns (GetSummariesResponse);
+  rpc ExportReadings(ExportReadingsRequest) returns (ExportReadingsResponse);
+}
